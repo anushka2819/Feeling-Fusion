@@ -49,9 +49,12 @@ export function template() {
                     <div class="mixer-slots">
                         <div class="mixer-slot">
                             <div id="mixer-slot-1" class="flask-visual">
+                                <!-- Conical Flask Shape -->
                                 <svg viewBox="0 0 100 120" class="beaker-img">
-                                    <path d="M40 20 L40 50 L20 100 L80 100 L60 50 L60 20 Z" stroke="white" stroke-width="2" fill="none" opacity="0.5"/>
+                                    <path d="M40 20 L40 50 L10 110 L90 110 L60 50 L60 20 Z" stroke="white" stroke-width="2" fill="none" opacity="0.3"/>
                                 </svg>
+                                <!-- Liquid Layer -->
+                                <div id="flask-liquid-1" class="flask-liquid"></div>
                                 <div id="flask-icon-1" class="slot-icon-overlay"></div>
                             </div>
                             <div id="slot-name-1" class="slot-label">Ingredient 1</div>
@@ -61,9 +64,12 @@ export function template() {
 
                         <div class="mixer-slot">
                             <div id="mixer-slot-2" class="flask-visual">
+                                <!-- Conical Flask Shape -->
                                 <svg viewBox="0 0 100 120" class="beaker-img">
-                                    <path d="M40 20 L40 50 L20 100 L80 100 L60 50 L60 20 Z" stroke="white" stroke-width="2" fill="none" opacity="0.5"/>
+                                    <path d="M40 20 L40 50 L10 110 L90 110 L60 50 L60 20 Z" stroke="white" stroke-width="2" fill="none" opacity="0.3"/>
                                 </svg>
+                                <!-- Liquid Layer -->
+                                <div id="flask-liquid-2" class="flask-liquid"></div>
                                 <div id="flask-icon-2" class="slot-icon-overlay"></div>
                             </div>
                             <div id="slot-name-2" class="slot-label">Ingredient 2</div>
@@ -292,12 +298,17 @@ function updateSlotUI(slotNum, data) {
     const iconOverlay = document.getElementById(`flask-icon-${slotNum}`);
     const label = document.getElementById(`slot-name-${slotNum}`);
     const flask = document.getElementById(`mixer-slot-${slotNum}`);
-    if (!iconOverlay || !label || !flask) return;
+    const liquid = document.getElementById(`flask-liquid-${slotNum}`);
+    if (!iconOverlay || !label || !flask || !liquid) return;
     
-    iconOverlay.innerHTML = `<img src="${data.icon}" alt="${data.name}" style="width: 100%; height: 100%;">`;
+    iconOverlay.innerHTML = `<img src="${data.icon}" alt="${data.name}" style="width: 100%; height: 100%; animation: popIn 0.3s forwards;">`;
     flask.classList.add('occupied');
     label.textContent = data.name;
     label.style.color = 'white';
+    
+    // Fill liquid
+    liquid.style.backgroundColor = data.color;
+    liquid.style.height = '60%';
 }
 
 function checkCombinations() {
@@ -320,16 +331,20 @@ function clearMixer() {
     const icon1 = document.getElementById('flask-icon-1');
     const label1 = document.getElementById('slot-name-1');
     const flask1 = document.getElementById('mixer-slot-1');
+    const liq1 = document.getElementById('flask-liquid-1');
     if (icon1) icon1.innerHTML = '';
     if (flask1) flask1.classList.remove('occupied');
     if (label1) label1.textContent = 'Ingredient 1';
+    if (liq1) liq1.style.height = '0%';
 
     const icon2 = document.getElementById('flask-icon-2');
     const label2 = document.getElementById('slot-name-2');
     const flask2 = document.getElementById('mixer-slot-2');
+    const liq2 = document.getElementById('flask-liquid-2');
     if (icon2) icon2.innerHTML = '';
     if (flask2) flask2.classList.remove('occupied');
     if (label2) label2.textContent = 'Ingredient 2';
+    if (liq2) liq2.style.height = '0%';
 
     document.querySelectorAll('.choice-bubble').forEach(b => {
         b.classList.remove('selected');
