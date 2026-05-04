@@ -1,25 +1,24 @@
-/* Premium Lab Styles */
 :root {
     --primary: #4FC3F7;
-    --accent: #FF4081; /* Pink for the button */
-    --bg-light: #E1F5FE;
-    --lab-bg: #263238;
-    --card-bg: rgba(255, 255, 255, 0.05);
+    --accent: #FF4081;
+    --chalk: rgba(255, 255, 255, 0.7);
+    --board-bg: #1B5E20; 
+    --wall-bg: #CFD8DC;  
+    --wood: #5D4037;
+    --wood-dark: #3E2723;
     --text-main: #FFFFFF;
-    --text-muted: rgba(255, 255, 255, 0.5);
-    --grid-color: rgba(79, 195, 247, 0.2);
 }
 
 body {
     margin: 0;
     padding: 0;
     font-family: 'Outfit', sans-serif;
-    background-color: var(--bg-light);
+    background-color: var(--wall-bg);
     background-image: 
-        linear-gradient(var(--grid-color) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-    background-size: 30px 30px;
-    color: var(--text-main);
+        linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    color: #263238;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -30,9 +29,6 @@ body {
 #app {
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .screen {
@@ -45,170 +41,136 @@ body {
     flex-direction: column;
 }
 
-/* Lab Container */
-.mood-mixer-container {
-    width: 90%;
-    max-width: 1000px;
-    height: 80%;
-    background: var(--lab-bg);
-    border-radius: 40px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-    position: relative;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Header Buttons */
-.mixer-header {
-    position: absolute;
-    top: -60px;
+/* --- THE LAB ENVIRONMENT --- */
+.lab-environment {
+    position: fixed;
+    top: 0;
     left: 0;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
+    height: 100%;
+    z-index: 1; /* Above background, below UI */
+    pointer-events: none;
 }
 
-.circle-btn {
-    background: white;
-    border: none;
-    border-radius: 12px;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #263238;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
+.chalkboard {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
+    height: 52%;
+    background: var(--board-bg);
+    border: 12px solid var(--wood-dark);
+    border-radius: 4px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3), inset 0 0 100px rgba(0,0,0,0.4);
 }
-.circle-btn:hover { transform: scale(1.1); }
 
-/* Main Area Layout */
+.formula {
+    position: absolute;
+    font-family: 'Dancing Script', cursive;
+    color: var(--chalk);
+    font-size: 1.4rem;
+    opacity: 0.5;
+}
+
+.workbench {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 240px;
+    background: var(--wood);
+    border-top: 10px solid var(--wood-dark);
+    box-shadow: 0 -15px 50px rgba(0,0,0,0.4);
+}
+
+/* --- UI CONTAINER --- */
+.mood-mixer-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 10; /* Above environment */
+}
+
 .lab-main-area {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 240px 1fr 240px;
     gap: 20px;
-    height: 100%;
+    height: calc(100% - 140px);
     align-items: center;
-}
-
-/* Side Panels */
-.lab-side-choices {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 0 40px;
 }
 
 .side-label {
-    text-transform: uppercase;
-    font-weight: 900;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
     color: var(--primary);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .choice-grid-2x4 {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
     gap: 12px;
 }
 
 .choice-bubble {
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 2px solid transparent;
-    border-radius: 15px;
+    width: 75px;
+    height: 75px;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
+    pointer-events: auto; /* Ensure clickable */
 }
-.choice-bubble img { width: 40px; height: 40px; }
-.choice-bubble:hover { background: rgba(255, 255, 255, 0.15); }
-.choice-bubble.selected {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: white;
-    transform: scale(1.05);
-}
+.choice-bubble:hover { transform: translateY(-3px); background: rgba(255,255,255,0.15); }
+.choice-bubble.selected { border-color: var(--primary); background: rgba(79, 195, 247, 0.2); }
+.choice-bubble img { width: 45px; height: 45px; }
 
-/* Center Flask Area */
+/* Flask Area */
 .lab-flask-area {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: relative;
+    height: 100%;
 }
 
 .mixer-slots {
     display: flex;
     align-items: flex-end;
-    gap: 20px;
-    margin-bottom: 40px;
-}
-
-.plus-symbol {
-    font-size: 2.5rem;
-    color: var(--primary);
-    font-weight: 900;
+    gap: 40px;
     margin-bottom: 40px;
 }
 
 .mixer-slot {
-    width: 120px;
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    width: 130px;
+    height: 170px;
     position: relative;
-    overflow: hidden; /* Keep liquid inside */
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: bottom center;
 }
 
-.flask-visual {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+.flask-visual { width: 100%; height: 100%; position: relative; }
+.beaker-img { width: 100%; height: 100%; opacity: 0.6; pointer-events: none; }
 
 .flask-liquid {
     position: absolute;
-    bottom: 10px; /* Offset to match flask base */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
+    bottom: 8px;
+    left: 10%;
+    width: 80%;
     height: 0%;
-    background-color: var(--primary);
+    background: var(--primary);
     clip-path: polygon(30% 0, 70% 0, 100% 100%, 0% 100%);
-    transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s;
-    opacity: 0.6;
+    transition: height 0.8s ease-out, background-color 0.4s;
+    opacity: 0.7;
     z-index: 1;
-}
-
-.beaker-img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    z-index: 2;
-    pointer-events: none;
-}
-
-.mixer-slot.occupied .beaker-img { opacity: 0.8; }
-
-.slot-label {
-    margin-top: 10px;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    font-weight: 800;
-    color: var(--text-muted);
 }
 
 .slot-icon-overlay {
@@ -216,192 +178,150 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
     z-index: 5;
+    pointer-events: none;
 }
 
-/* Begin Experiment Button */
-.btn-primary {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 15px 40px;
-    border-radius: 50px;
-    font-weight: 900;
-    font-size: 1.1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 0 20px rgba(255, 64, 129, 0.5);
-    transition: all 0.3s;
-    margin-bottom: 30px;
-}
-.btn-primary:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 40px rgba(255, 64, 129, 0.8);
-}
-.btn-primary.disabled {
-    background: #455A64;
-    box-shadow: none;
-    opacity: 0.5;
-    cursor: not-allowed;
+.plus-symbol {
+    font-size: 3rem;
+    color: var(--chalk);
+    font-weight: 300;
+    margin-bottom: 60px;
 }
 
-/* Discovery Grid */
-.mixer-discovery-grid {
-    display: flex;
-    gap: 10px;
-    padding: 15px 30px;
-    border: 2px dashed rgba(255,255,255,0.1);
+/* Reaction Flask */
+.reaction-container {
+    position: absolute;
+    bottom: 120px;
+    width: 160px;
+    height: 200px;
+    display: none;
+    z-index: 20;
+    pointer-events: none;
+}
+.reaction-container.active { display: block; animation: popIn 0.3s forwards; }
+
+.blast-effect {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, white 0%, transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 100;
+}
+.blast-effect.active { animation: blastPop 0.8s ease-out forwards; }
+
+@keyframes blastPop {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    20% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+}
+
+/* Discovery Shelf */
+.discovery-shelf-container {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 110px;
+    background: rgba(0,0,0,0.4);
     border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px;
+    border-bottom: 8px solid rgba(0,0,0,0.5);
+    z-index: 15;
 }
 
 .discovery-slot {
-    width: 50px;
-    height: 35px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 5px;
+    width: 80px;
+    height: 80px;
+    background: rgba(255,255,255,0.05);
+    border: 2px dashed rgba(255,255,255,0.1);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.discovery-slot.locked i { color: rgba(255,255,255,0.1); font-size: 1rem; }
-.discovery-slot.unlocked { background: var(--slot-color); }
-.discovery-icon { width: 25px; height: 25px; }
+.discovery-slot.unlocked { background: var(--slot-color); border-style: solid; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
 
-/* Overlay Styles */
+/* Buttons */
+.btn-primary {
+    background: #C62828;
+    color: white;
+    border: none;
+    padding: 18px 50px;
+    border-radius: 15px;
+    font-weight: 900;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    pointer-events: auto;
+}
+.btn-primary:hover:not(.disabled) { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0,0,0,0.5); }
+.btn-primary.disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* Overlays */
 .fusion-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.85);
-    -webkit-backdrop-filter: blur(15px);
-    backdrop-filter: blur(15px);
     z-index: 1000;
     display: none;
     align-items: center;
     justify-content: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 .fusion-overlay.active { display: flex; }
 
-/* Tutorial & Splash (Keeping basic but matching theme) */
-.splash-screen { background: var(--lab-bg); align-items: center; justify-content: center; }
-.tutorial-screen { background: var(--lab-bg); padding: 50px; }
-
-.side-label {
-    text-transform: uppercase;
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 10px;
+.fusion-content {
+    background: var(--board-bg);
+    border: 3px solid var(--primary);
+    padding: 50px;
+    border-radius: 30px;
     text-align: center;
-}
-
-/* Splash Screen */
-.splash-screen, .tutorial-screen {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.splash-content, .tutorial-card {
+    max-width: 500px;
     width: 90%;
-    max-width: 600px;
-    background: var(--lab-bg);
-    border-radius: 40px;
-    padding: 60px 40px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-    text-align: center;
-    position: relative;
-    animation: slideInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 30px 100px rgba(0,0,0,0.8);
 }
 
-.tutorial-card {
-    max-width: 800px;
-    text-align: left;
-    padding: 40px;
+/* Animations */
+.pouring-left { transform: rotate(70deg) translate(70px, -40px); }
+.pouring-right { transform: rotate(-70deg) translate(-70px, -40px); }
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
 }
 
-@keyframes slideInUp {
-    from { transform: translateY(30px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-.logo-container {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 20px;
-}
-.logo-glow {
+.smoke {
     position: absolute;
-    width: 150%;
-    height: 150%;
-    top: -25%;
-    left: -25%;
-    background: radial-gradient(circle, rgba(79, 195, 247, 0.2) 0%, transparent 70%);
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    filter: blur(10px);
+    opacity: 0;
+    z-index: 95;
 }
-.main-logo-icon {
-    width: 60px;
-    height: 60px;
-    color: var(--primary);
-}
-
-.splash-title {
-    font-size: 3rem;
-    font-weight: 900;
-    margin: 0;
-    letter-spacing: -1px;
-    color: white;
-}
-.splash-subtitle {
-    color: var(--text-muted);
-    margin-bottom: 40px;
-    font-size: 1.1rem;
+.smoke.active { animation: smokeRise 1.5s ease-out forwards; }
+@keyframes smokeRise {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.8; }
+    100% { transform: translate(-50%, -150%) scale(2.5); opacity: 0; }
 }
 
-/* Tutorial Specifics */
-.tutorial-header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 40px;
-}
-.tutorial-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    margin-bottom: 40px;
-}
-.tutorial-step {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-}
-.step-icon {
-    width: 35px;
-    height: 35px;
-    background: var(--primary);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    color: var(--lab-bg);
-    flex-shrink: 0;
-}
-.step-text h3 { margin: 0; font-size: 1.2rem; color: white; }
-.step-text p { margin: 5px 0 0; color: var(--text-muted); font-size: 0.95rem; }
-
-.splash-footer {
-    position: absolute;
-    bottom: -40px;
-    width: 100%;
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--text-muted);
+/* Splash/Tutorial Card Fix */
+.splash-content, .tutorial-card {
+    background: white;
+    padding: 60px;
+    border-radius: 30px;
+    box-shadow: 0 50px 150px rgba(0,0,0,0.7);
+    z-index: 100;
 }

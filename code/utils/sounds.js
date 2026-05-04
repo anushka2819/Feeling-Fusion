@@ -273,5 +273,24 @@ export const sounds = {
         for (let j = 0; j < 8; j++) {
             this.clap(ac.currentTime + 0.3 + Math.random() * 0.5);
         }
+    },
+
+    /** Bubbling pour sound for the lab beakers */
+    pour() {
+        for (let i = 0; i < 5; i++) {
+            tone({ 
+                freq: 800 - (i * 100), 
+                type: 'sine', 
+                dur: 0.25, 
+                vol: 0.08, 
+                delay: i * 0.1 
+            });
+        }
+    },
+
+    /** Magical sound for successful fusion */
+    mixSuccess() {
+        this.shimmer();
+        setTimeout(() => this.discovery(), 300);
     }
 };
