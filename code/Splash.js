@@ -11,7 +11,7 @@ export function template() {
                 <div class="logo-glow"></div>
                 <i data-lucide="beaker" class="main-logo-icon"></i>
             </div>
-            <h1 class="splash-title">EMO MIXER</h1>
+            <h1 class="splash-title">FEELING FUSION</h1>
             <p class="splash-subtitle">The Feeling Fusion Lab</p>
             
             <div class="splash-actions">
