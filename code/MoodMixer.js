@@ -13,7 +13,7 @@ let selectedSlot2 = null;
 
 export function template() {
     const basicEmotions = Object.values(EMOTIONS_DATA);
-    
+
     const generateChoiceHtml = (side) => basicEmotions.map((emo) => `
         <button class="choice-bubble choice-${side}" data-emotion="${emo.id}" data-side="${side}" title="${emo.name}" type="button">
             <img src="${emo.icon}" alt="${emo.name}">
@@ -158,8 +158,32 @@ function initChoiceListeners() {
 
             document.querySelectorAll(`.choice-${side}`).forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
+            
+            updateDisabledStates();
             checkCombinations();
         });
+    });
+}
+
+function updateDisabledStates() {
+    const choices = document.querySelectorAll('.choice-bubble');
+    choices.forEach(btn => {
+        const emoId = btn.dataset.emotion;
+        const side = btn.dataset.side;
+        
+        // Remove existing disabled state
+        btn.classList.remove('disabled');
+        btn.disabled = false;
+
+        // If this is the OTHER side and it matches our selection, disable it
+        if (side === 'right' && selectedSlot1 && emoId === selectedSlot1.id) {
+            btn.classList.add('disabled');
+            btn.disabled = true;
+        }
+        if (side === 'left' && selectedSlot2 && emoId === selectedSlot2.id) {
+            btn.classList.add('disabled');
+            btn.disabled = true;
+        }
     });
 }
 
@@ -177,7 +201,7 @@ function renderDiscoveryGrid() {
         const discovered = state.discoveredMixes[i];
         const slot = document.createElement('div');
         slot.className = discovered ? 'discovery-slot unlocked' : 'discovery-slot locked';
-        
+
         if (discovered) {
             slot.style.setProperty('--slot-color', discovered.color);
             slot.innerHTML = `<img src="${discovered.icon}" style="width: 45px; height: 45px;" alt="${discovered.name}">`;
@@ -193,10 +217,10 @@ function updateSlotUI(slotNum, data) {
     const label = document.getElementById(`slot-name-${slotNum}`);
     const liquid = document.getElementById(`liquid-${slotNum}`);
     if (!label || !liquid) return;
-    
+
     label.textContent = data.name;
     label.style.color = 'white';
-    
+
     liquid.setAttribute('fill', data.color);
     liquid.style.height = '60px'; // Fills halfway
     liquid.style.y = '50';
@@ -218,7 +242,7 @@ function checkCombinations() {
 async function performFusion() {
     if (!selectedSlot1 || !selectedSlot2) return;
 
-    const recipe = MIXING_RECIPES.find(r => 
+    const recipe = MIXING_RECIPES.find(r =>
         (r.e1 === selectedSlot1.id && r.e2 === selectedSlot2.id) ||
         (r.e1 === selectedSlot2.id && r.e2 === selectedSlot1.id)
     );
@@ -237,7 +261,7 @@ async function performFusion() {
     slotsWrap.classList.add('pouring');
     s1.classList.add('pouring-left');
     s2.classList.add('pouring-right');
-    
+
     // Color streams
     streamL.style.background = selectedSlot1.color;
     streamR.style.background = selectedSlot2.color;
@@ -299,7 +323,7 @@ function showFusionResult(result) {
     descEl.textContent = result.description;
     characterEl.innerHTML = `<img src="${result.icon}" style="width: 100%; height: 100%; animation: popIn 0.5s;">`;
     formulaEl.textContent = `${selectedSlot1.name} + ${selectedSlot2.name}`;
-    
+
     overlay.classList.add('active');
     speakText(`Success! You discovered ${result.name}!`);
 }
@@ -308,7 +332,7 @@ function closeFusionOverlay() {
     document.getElementById('fusion-overlay').classList.remove('active');
     document.getElementById('reaction-flask-container').classList.remove('active');
     document.getElementById('blast-effect').classList.remove('active');
-    
+
     const slotsWrap = document.getElementById('mixer-slots-wrap');
     const s1 = document.getElementById('mixer-slot-1-wrap');
     const s2 = document.getElementById('mixer-slot-2-wrap');
@@ -323,12 +347,16 @@ function closeFusionOverlay() {
 function clearMixer() {
     selectedSlot1 = null;
     selectedSlot2 = null;
-    
+
     const liq1 = document.getElementById('liquid-1');
     const liq2 = document.getElementById('liquid-2');
     if (liq1) { liq1.style.height = '0'; liq1.style.y = '110'; }
     if (liq2) { liq2.style.height = '0'; liq2.style.y = '110'; }
 
-    document.querySelectorAll('.choice-bubble').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('.choice-bubble').forEach(b => {
+        b.classList.remove('selected');
+        b.classList.remove('disabled');
+        b.disabled = false;
+    });
     checkCombinations();
 }
