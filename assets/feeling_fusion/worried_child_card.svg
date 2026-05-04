@@ -1,0 +1,17 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Card Base -->
+  <rect x="10" y="10" width="180" height="180" rx="30" fill="white" stroke="#BBDEFB" stroke-width="4" />
+  
+  <!-- Worried Child 🥺 - Soft blue face -->
+  <circle cx="100" cy="100" r="60" fill="#90CAF9" />
+  
+  <circle cx="80" cy="95" r="15" fill="#263238" />
+  <circle cx="120" cy="95" r="15" fill="#263238" />
+  <circle cx="75" cy="90" r="5" fill="white" />
+  <circle cx="115" cy="90" r="5" fill="white" />
+  
+  <path d="M70 70 Q80 60 90 70" stroke="#1565C0" stroke-width="4" stroke-linecap="round" fill="none" />
+  <path d="M110 70 Q120 60 130 70" stroke="#1565C0" stroke-width="4" stroke-linecap="round" fill="none" />
+  
+  <circle cx="100" cy="130" r="8" fill="#1565C0" opacity="0.6" />
+</svg>

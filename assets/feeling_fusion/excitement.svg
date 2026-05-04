@@ -1,0 +1,15 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Excitement character: A sparkling star with an energetic vibe -->
+    <path d="M50,10 L62,38 L92,42 L70,62 L75,92 L50,78 L25,92 L30,62 L8,42 L38,38 Z" fill="#FFF176" stroke="#FBC02D" stroke-width="4" stroke-linejoin="round" />
+    <!-- Happy / Wide Eyes -->
+    <circle cx="40" cy="50" r="7" fill="#3E2723" />
+    <circle cx="60" cy="50" r="7" fill="#3E2723" />
+    <circle cx="38" cy="48" r="2" fill="white" />
+    <circle cx="58" cy="48" r="2" fill="white" />
+    <!-- Excited Mouth -->
+    <circle cx="50" cy="65" r="8" fill="#5D4037" />
+    <path d="M48,64 Q50,68 52,64" stroke="white" stroke-width="1.5" fill="none" />
+    <!-- Vibration lines -->
+    <path d="M15,20 Q5,30 5,45" stroke="#FFD54F" stroke-width="2" fill="none" opacity="0.6" />
+    <path d="M85,20 Q95,30 95,45" stroke="#FFD54F" stroke-width="2" fill="none" opacity="0.6" />
+</svg>

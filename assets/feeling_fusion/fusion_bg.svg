@@ -1,0 +1,37 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Lab Background (Science Blue/Gray) -->
+    <rect width="1920" height="1080" fill="#E1F5FE"/>
+    
+    <!-- Floor / Workbench -->
+    <rect y="880" width="1920" height="200" fill="#ECEFF1"/>
+    <rect y="880" width="1920" height="10" fill="#CFD8DC"/>
+
+    <!-- Decorative Science Gear (Beakers, Flasks) -->
+    <g opacity="0.3">
+        <!-- Beaker 1 -->
+        <path d="M200 880H350V650H200V880Z" fill="#B0BEC5"/>
+        <rect x="210" y="700" width="130" height="170" fill="#FF80AB" fill-opacity="0.4"/>
+        
+        <!-- Flask 2 (Erlenmeyer) -->
+        <path d="M1650 880L1600 700H1700L1750 880H1650Z" fill="#B0BEC5"/>
+        <path d="M1630 810L1615 750H1685L1700 810" fill="#4FC3F7" fill-opacity="0.4"/>
+        
+        <!-- Test Tube Rack -->
+        <rect x="500" y="820" width="150" height="60" rx="5" fill="#90A4AE"/>
+        <rect x="520" y="750" width="15" height="100" rx="7.5" fill="#FFD54F" fill-opacity="0.4"/>
+        <rect x="550" y="750" width="15" height="100" rx="7.5" fill="#AED581" fill-opacity="0.4"/>
+        <rect x="580" y="750" width="15" height="100" rx="7.5" fill="#CE93D8" fill-opacity="0.4"/>
+    </g>
+
+    <!-- Bubbles / Steam -->
+    <g opacity="0.4">
+        <circle cx="275" cy="620" r="15" fill="#FF80AB"/>
+        <circle cx="295" cy="580" r="10" fill="#FF80AB"/>
+        <circle cx="1650" cy="680" r="12" fill="#4FC3F7"/>
+        <circle cx="1680" cy="640" r="8" fill="#4FC3F7"/>
+    </g>
+
+    <!-- Background Pattern (Grid/Graph Paper) -->
+    <path d="M0 0H1920M0 50H1920M0 100H1920M0 150H1920M0 200H1920M0 250H1920M0 300H1920M0 350H1920M0 400H1920M0 450H1920M0 500H1920M0 550H1920M0 600H1920M0 650H1920M0 700H1920M0 750H1920M0 800H1920" stroke="#B3E5FC" stroke-width="2"/>
+    <path d="M0 0V880M50 0V880M100 0V880M150 0V880M200 0V880M250 0V880M300 0V880M350 0V880M400 0V880M450 0V880M500 0V880M550 0V880M600 0V880M650 0V880M700 0V880M750 0V880M800 0V880M850 0V880M900 0V880M950 0V880M1000 0V880M1050 0V880M1100 0V880M1150 0V880M1200 0V880M1250 0V880M1300 0V880M1350 0V880M1400 0V880M1450 0V880M1500 0V880M1550 0V880M1600 0V880M1650 0V880M1700 0V880M1750 0V880M1800 0V880M1850 0V880M1900 0V880" stroke="#B3E5FC" stroke-width="2"/>
+</svg>

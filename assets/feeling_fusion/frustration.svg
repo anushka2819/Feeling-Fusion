@@ -1,0 +1,13 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Frustration character: A storm cloud with a mix of anger and sadness -->
+    <path d="M25,60 Q15,60 15,45 Q15,30 30,30 Q30,15 50,15 Q70,15 70,30 Q85,30 85,45 Q85,60 75,60 Z" fill="#FF7043" />
+    <!-- Angry Eyes -->
+    <path d="M35,40 L45,45" stroke="#3E2723" stroke-width="3" stroke-linecap="round" />
+    <path d="M65,40 L55,45" stroke="#3E2723" stroke-width="3" stroke-linecap="round" />
+    <circle cx="40" cy="48" r="4" fill="#3E2723" />
+    <circle cx="60" cy="48" r="4" fill="#3E2723" />
+    <!-- Sad / Frustrated Mouth -->
+    <path d="M40,65 Q50,72 60,65" stroke="#3E2723" stroke-width="3" fill="none" stroke-linecap="round" />
+    <!-- Tiny lightning bolt of tension -->
+    <path d="M50,25 L45,35 L55,35 L50,45" fill="#FFF176" stroke="#FBC02D" stroke-width="1" />
+</svg>

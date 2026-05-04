@@ -1,0 +1,29 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background Gradient -->
+    <defs>
+        <linearGradient id="panicGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#EF5350;stop-opacity:1" /> <!-- Anger Red -->
+            <stop offset="100%" style="stop-color:#9C27B0;stop-opacity:1" /> <!-- Fear Purple -->
+        </linearGradient>
+        <filter id="zigzag" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" result="turb" />
+            <feDisplacementMap in="SourceGraphic" in2="turb" scale="8" />
+        </filter>
+    </defs>
+    
+    <!-- Jagged/Shaking Body -->
+    <circle cx="100" cy="110" r="75" fill="url(#panicGrad)" filter="url(#zigzag)" stroke="#311B92" stroke-width="4"/>
+    
+    <!-- Wide "Panic" Eyes -->
+    <circle cx="75" cy="90" r="18" fill="white" stroke="#311B92" stroke-width="2"/>
+    <circle cx="75" cy="90" r="6" fill="#1A237E"/>
+    
+    <circle cx="125" cy="90" r="18" fill="white" stroke="#311B92" stroke-width="2"/>
+    <circle cx="125" cy="90" r="6" fill="#1A237E"/>
+    
+    <!-- Squiggly Mouth -->
+    <path d="M 75 135 Q 85 125 100 135 T 125 135" fill="none" stroke="#311B92" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- Shaking Hands/Sweat Lines -->
+    <path d="M 40 70 L 20 50 M 160 70 L 180 50 M 100 20 L 100 5" fill="none" stroke="#EF5350" stroke-width="3" stroke-linecap="round"/>
+</svg>

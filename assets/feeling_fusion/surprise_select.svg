@@ -1,0 +1,13 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Card Base -->
+  <rect x="10" y="10" width="180" height="180" rx="30" fill="white" stroke="#F06292" stroke-width="4" />
+  <!-- Surprise Face -->
+  <circle cx="100" cy="100" r="70" fill="#F06292" />
+  <circle cx="75" cy="85" r="15" fill="white" />
+  <circle cx="125" cy="85" r="15" fill="white" />
+  <circle cx="75" cy="85" r="6" fill="#212121" />
+  <circle cx="125" cy="85" r="6" fill="#212121" />
+  <!-- Big open mouth -->
+  <circle cx="100" cy="135" r="22" fill="white" />
+  <circle cx="100" cy="135" r="15" fill="#880E4F" />
+</svg>

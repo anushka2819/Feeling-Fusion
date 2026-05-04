@@ -1,0 +1,11 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Card Base -->
+  <rect x="10" y="10" width="180" height="180" rx="30" fill="white" stroke="#42A5F5" stroke-width="4" />
+  <!-- Sadness Face -->
+  <circle cx="100" cy="100" r="70" fill="#42A5F5" />
+  <circle cx="80" cy="95" r="8" fill="white" />
+  <circle cx="120" cy="95" r="8" fill="white" />
+  <path d="M80 140 Q100 155 120 140" stroke="white" stroke-width="6" stroke-linecap="round" fill="none" transform="rotate(180 100 140)" />
+  <!-- Teardrop -->
+  <path d="M70 110 Q70 125 80 125 Q90 125 90 110 Q80 100 70 110" fill="white" />
+</svg>

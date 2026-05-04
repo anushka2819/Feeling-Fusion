@@ -1,0 +1,13 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Card Base -->
+  <rect x="10" y="10" width="180" height="180" rx="30" fill="white" stroke="#FB8C00" stroke-width="4" />
+  <!-- Anticipation Face -->
+  <circle cx="100" cy="100" r="70" fill="#FB8C00" />
+  <!-- Wide eager eyes -->
+  <circle cx="75" cy="90" r="18" fill="white" />
+  <circle cx="125" cy="90" r="18" fill="white" />
+  <circle cx="80" cy="90" r="8" fill="#5D4037" />
+  <circle cx="120" cy="90" r="8" fill="#5D4037" />
+  <!-- Small O mouth -->
+  <ellipse cx="100" cy="135" rx="15" ry="12" fill="white" />
+</svg>

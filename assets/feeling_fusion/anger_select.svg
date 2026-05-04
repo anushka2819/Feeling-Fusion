@@ -1,0 +1,10 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Card Base -->
+  <rect x="10" y="10" width="180" height="180" rx="30" fill="white" stroke="#FF5252" stroke-width="4" />
+  <!-- Anger Face -->
+  <circle cx="100" cy="100" r="70" fill="#FF5252" />
+  <path d="M70 80 L90 90 M130 80 L110 90" stroke="white" stroke-width="8" stroke-linecap="round" />
+  <circle cx="80" cy="110" r="8" fill="white" />
+  <circle cx="120" cy="110" r="8" fill="white" />
+  <path d="M80 145 Q100 130 120 145" stroke="white" stroke-width="6" stroke-linecap="round" fill="none" />
+</svg>

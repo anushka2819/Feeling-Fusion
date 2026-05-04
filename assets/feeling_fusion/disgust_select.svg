@@ -1,0 +1,12 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Card Base -->
+  <rect x="10" y="10" width="180" height="180" rx="30" fill="white" stroke="#AFB42B" stroke-width="4" />
+  <!-- Disgust Face -->
+  <circle cx="100" cy="100" r="70" fill="#AFB42B" />
+  <!-- Scrunched Eyes -->
+  <path d="M70 85 L90 95 M70 95 L90 85" stroke="white" stroke-width="6" stroke-linecap="round" />
+  <path d="M110 85 L130 95 M110 95 L130 85" stroke="white" stroke-width="6" stroke-linecap="round" />
+  <!-- Tongue sticking out slightly -->
+  <path d="M90 130 L110 130 Q110 150 100 150 Q90 150 90 130" fill="#EF9A9A" />
+  <path d="M85 125 Q100 115 115 125" stroke="white" stroke-width="5" stroke-linecap="round" fill="none" />
+</svg>

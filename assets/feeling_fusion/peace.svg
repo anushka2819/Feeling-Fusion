@@ -1,0 +1,11 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Peaceful character: A soft blue cloud with closed eyes and a heart -->
+    <path d="M25,65 Q15,65 15,50 Q15,35 30,35 Q30,20 50,20 Q70,20 70,35 Q85,35 85,50 Q85,65 75,65 Z" fill="#BBDEFB" stroke="#90CAF9" stroke-width="4" />
+    <!-- Peaceful / Closed Eyes -->
+    <path d="M35,50 Q43,58 51,50" stroke="#37474F" stroke-width="3" fill="none" stroke-linecap="round" />
+    <path d="M59,50 Q67,58 75,50" stroke="#37474F" stroke-width="3" fill="none" stroke-linecap="round" />
+    <!-- Peaceful Smile -->
+    <path d="M45,60 Q55,68 65,60" stroke="#37474F" stroke-width="3" fill="none" stroke-linecap="round" />
+    <!-- Tiny heart of love/contentment -->
+    <path d="M50,35 Q50,45 60,45 Q50,55 40,45 Q50,45 50,35 Z" fill="#FF80AB" opacity="0.6" />
+</svg>
