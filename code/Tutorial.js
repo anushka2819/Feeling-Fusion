@@ -6,16 +6,16 @@ import { sounds } from './utils/sounds.js';
 export function template() {
     return /* html */`
     <section id="screen-tutorial" class="screen tutorial-screen" aria-label="How to Play">
-        <header class="tutorial-header">
-            <button id="btn-tutorial-back" class="btn-icon circle-btn">
-                <i data-lucide="arrow-left"></i>
-            </button>
-            <h2 class="premium-title">How to Play</h2>
-        </header>
+        <div class="tutorial-card">
+            <header class="tutorial-header">
+                <button id="btn-tutorial-back" class="circle-btn">
+                    <i data-lucide="arrow-left"></i>
+                </button>
+                <h2 class="splash-title" style="font-size: 2rem;">How to Play</h2>
+            </header>
 
-        <div class="tutorial-content">
             <div class="tutorial-steps">
-                <div class="tutorial-step" style="--delay: 1">
+                <div class="tutorial-step">
                     <div class="step-icon">1</div>
                     <div class="step-text">
                         <h3>Pick Ingredients</h3>
@@ -23,7 +23,7 @@ export function template() {
                     </div>
                 </div>
 
-                <div class="tutorial-step" style="--delay: 2">
+                <div class="tutorial-step">
                     <div class="step-icon">2</div>
                     <div class="step-text">
                         <h3>Mix Them Up</h3>
@@ -31,7 +31,7 @@ export function template() {
                     </div>
                 </div>
 
-                <div class="tutorial-step" style="--delay: 3">
+                <div class="tutorial-step">
                     <div class="step-icon">3</div>
                     <div class="step-text">
                         <h3>Discover New Feelings</h3>
@@ -40,7 +40,7 @@ export function template() {
                 </div>
             </div>
 
-            <button id="btn-tutorial-done" class="btn-primary">
+            <button id="btn-tutorial-done" class="btn-primary" style="width: 100%; justify-content: center;">
                 I'm Ready!
             </button>
         </div>

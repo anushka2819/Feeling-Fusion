@@ -277,80 +277,69 @@ body {
 }
 
 /* Splash Screen */
-.splash-screen {
+.splash-screen, .tutorial-screen {
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    background: radial-gradient(circle at center, #302b63 0%, #0f0c29 100%);
 }
-.splash-content {
-    max-width: 400px;
+
+.splash-content, .tutorial-card {
     width: 90%;
+    max-width: 600px;
+    background: var(--lab-bg);
+    border-radius: 40px;
+    padding: 60px 40px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    text-align: center;
+    position: relative;
+    animation: slideInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
+.tutorial-card {
+    max-width: 800px;
+    text-align: left;
+    padding: 40px;
+}
+
+@keyframes slideInUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
 .logo-container {
     position: relative;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
 }
 .logo-glow {
     position: absolute;
     width: 150%;
     height: 150%;
-    background: radial-gradient(circle, rgba(79, 195, 247, 0.3) 0%, transparent 70%);
-    animation: pulseGlow 3s infinite;
+    top: -25%;
+    left: -25%;
+    background: radial-gradient(circle, rgba(79, 195, 247, 0.2) 0%, transparent 70%);
 }
 .main-logo-icon {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     color: var(--primary);
-    position: relative;
-    z-index: 1;
-}
-.splash-title {
-    font-size: 3.5rem;
-    font-weight: 900;
-    margin: 0;
-    letter-spacing: -2px;
-    background: linear-gradient(to bottom, #fff, #4FC3F7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.splash-subtitle {
-    font-size: 1.2rem;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 50px;
-    font-weight: 300;
-    letter-spacing: 2px;
-}
-.splash-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-.btn-secondary {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 15px 30px;
-    border-radius: 50px;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-.btn-secondary:hover {
-    background: rgba(255,255,255,0.2);
 }
 
-/* Tutorial Screen */
-.tutorial-screen {
-    padding: 30px;
-    background: #1a1a2e;
+.splash-title {
+    font-size: 3rem;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: -1px;
+    color: white;
 }
+.splash-subtitle {
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+}
+
+/* Tutorial Specifics */
 .tutorial-header {
     display: flex;
     align-items: center;
@@ -360,46 +349,34 @@ body {
 .tutorial-steps {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    margin-bottom: 50px;
+    gap: 25px;
+    margin-bottom: 40px;
 }
 .tutorial-step {
     display: flex;
     gap: 20px;
     align-items: flex-start;
-    animation: slideIn 0.5s ease-out forwards;
-    opacity: 0;
-    animation-delay: calc(var(--delay) * 0.2s);
 }
 .step-icon {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     background: var(--primary);
-    border-radius: 12px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 900;
-    font-size: 1.2rem;
+    color: var(--lab-bg);
     flex-shrink: 0;
 }
-.step-text h3 { margin: 0 0 5px 0; font-size: 1.3rem; }
-.step-text p { margin: 0; color: rgba(255,255,255,0.6); line-height: 1.5; }
-
-@keyframes pulseGlow {
-    0%, 100% { transform: scale(1); opacity: 0.3; }
-    50% { transform: scale(1.2); opacity: 0.5; }
-}
-@keyframes slideIn {
-    from { transform: translateX(30px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
+.step-text h3 { margin: 0; font-size: 1.2rem; color: white; }
+.step-text p { margin: 5px 0 0; color: var(--text-muted); font-size: 0.95rem; }
 
 .splash-footer {
     position: absolute;
-    bottom: 30px;
+    bottom: -40px;
     width: 100%;
     text-align: center;
     font-size: 0.8rem;
-    color: rgba(255,255,255,0.3);
+    color: var(--text-muted);
 }
