@@ -17,11 +17,7 @@ export function template() {
             <div class="splash-actions">
                 <button id="btn-start-game" class="btn-primary pulse-button">
                     <i data-lucide="play" style="margin-right: 10px;"></i>
-                    START EXPERIMENT
-                </button>
-                <button id="btn-show-tutorial" class="btn-secondary">
-                    <i data-lucide="help-circle" style="margin-right: 10px;"></i>
-                    HOW TO PLAY
+                    BEGIN ADVENTURE
                 </button>
             </div>
         </div>
@@ -34,11 +30,6 @@ export function template() {
 
 export function init({ navigate }) {
     document.getElementById('btn-start-game').addEventListener('click', () => {
-        sounds.click();
-        navigate('moodMixer');
-    });
-
-    document.getElementById('btn-show-tutorial').addEventListener('click', () => {
         sounds.click();
         navigate('tutorial');
     });
