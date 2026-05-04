@@ -15,7 +15,7 @@ export function template() {
     const basicEmotions = Object.values(EMOTIONS_DATA);
     
     const generateChoiceHtml = (side) => basicEmotions.map((emo, index) => `
-        <button class="choice-bubble choice-${side}" data-emotion="${emo.id}" data-side="${side}" title="${emo.name}" type="button" style="--delay: ${index}">
+        <button class="choice-bubble choice-${side}" data-emotion="${emo.id}" data-side="${side}" title="${emo.name}" type="button">
             <img src="${emo.icon}" alt="${emo.name}">
         </button>
     `).join('');
@@ -27,73 +27,64 @@ export function template() {
     <section id="screen-mood-mixer" class="screen" aria-label="Feeling Fusion Lab">
         <div class="mood-mixer-container">
             <header class="mixer-header">
-                <button id="btn-mixer-back" class="btn-icon circle-btn" aria-label="Exit" type="button">
+                <button id="btn-mixer-back" class="circle-btn" aria-label="Exit">
                     <i data-lucide="log-out"></i>
                 </button>
-                <button id="btn-mixer-settings" class="btn-icon circle-btn" aria-label="Settings" type="button">
+                <button id="btn-mixer-settings" class="circle-btn" aria-label="Settings">
                     <i data-lucide="settings"></i>
                 </button>
             </header>
 
-            <div class="mixer-card fusion-chamber full-screen-lab">
-                <div class="lab-main-area">
-                    <!-- 1. Selection Left -->
-                    <div class="lab-side-choices side-left">
-                        <p class="side-label">Element A</p>
-                        <div class="choice-grid-2x4">
-                            ${leftChoicesHtml}
+            <div class="lab-main-area">
+                <!-- Element A Panel -->
+                <div class="lab-side-choices side-left">
+                    <p class="side-label">ELEMENT A</p>
+                    <div class="choice-grid-2x4">
+                        ${leftChoicesHtml}
+                    </div>
+                </div>
+
+                <!-- Central Fusion Chamber -->
+                <div class="lab-flask-area">
+                    <div class="mixer-slots">
+                        <div class="mixer-slot">
+                            <div id="mixer-slot-1" class="flask-visual">
+                                <svg viewBox="0 0 100 120" class="beaker-img">
+                                    <path d="M40 20 L40 50 L20 100 L80 100 L60 50 L60 20 Z" stroke="white" stroke-width="2" fill="none" opacity="0.5"/>
+                                </svg>
+                                <div id="flask-icon-1" class="slot-icon-overlay"></div>
+                            </div>
+                            <div id="slot-name-1" class="slot-label">Ingredient 1</div>
+                        </div>
+
+                        <span class="plus-symbol">+</span>
+
+                        <div class="mixer-slot">
+                            <div id="mixer-slot-2" class="flask-visual">
+                                <svg viewBox="0 0 100 120" class="beaker-img">
+                                    <path d="M40 20 L40 50 L20 100 L80 100 L60 50 L60 20 Z" stroke="white" stroke-width="2" fill="none" opacity="0.5"/>
+                                </svg>
+                                <div id="flask-icon-2" class="slot-icon-overlay"></div>
+                            </div>
+                            <div id="slot-name-2" class="slot-label">Ingredient 2</div>
                         </div>
                     </div>
 
-                    <!-- 2. Flasks Container -->
-                    <div class="lab-flask-area">
-                        <div class="mixer-slots">
-                            <div class="slot-container">
-                                <div id="mixer-slot-1" class="mixer-slot">
-                                    <div class="flask-container">
-                                        <div id="flask-liquid-1" class="flask-liquid"></div>
-                                    </div>
-                                    <i data-lucide="beaker" style="opacity: 0.2; color: #81D4FA;"></i>
-                                </div>
-                                <div id="slot-name-1" class="slot-label">Ingredient 1</div>
-                            </div>
+                    <button id="btn-do-fusion" class="btn-primary disabled" disabled>
+                        <i data-lucide="test-tube-2"></i>
+                        Begin Experiment!
+                    </button>
 
-                            <span class="plus-symbol">+</span>
-
-                            <div class="slot-container">
-                                <div id="mixer-slot-2" class="mixer-slot">
-                                    <div class="flask-container">
-                                        <div id="flask-liquid-2" class="flask-liquid"></div>
-                                    </div>
-                                    <i data-lucide="beaker" style="opacity: 0.2; color: #81D4FA;"></i>
-                                </div>
-                                <div id="slot-name-2" class="slot-label">Ingredient 2</div>
-                            </div>
-                        </div>
+                    <div id="mixer-discovery-grid" class="mixer-discovery-grid">
+                        <!-- Discovery slots will be injected here -->
                     </div>
+                </div>
 
-                    <!-- 3. Selection Right -->
-                    <div class="lab-side-choices side-right">
-                        <p class="side-label">Element B</p>
-                        <div class="choice-grid-2x4">
-                            ${rightChoicesHtml}
-                        </div>
-                    </div>
-
-                    <!-- 4. Global Action Controls -->
-                    <div id="mixer-controls-container" class="lab-controls">
-                        <div id="mixer-controls">
-                            <button id="btn-do-fusion" class="btn-primary disabled" disabled>
-                                <i data-lucide="test-tube-2" style="margin-right: 10px;"></i>
-                                Begin Experiment!
-                            </button>
-                        </div>
-
-                        <div class="mixer-discovery-grid-small">
-                            <div id="mixer-discovery-grid" class="mixer-discovery-grid">
-                                <!-- Discovered emotions slots -->
-                            </div>
-                        </div>
+                <!-- Element B Panel -->
+                <div class="lab-side-choices side-right">
+                    <p class="side-label">ELEMENT B</p>
+                    <div class="choice-grid-2x4">
+                        ${rightChoicesHtml}
                     </div>
                 </div>
             </div>
@@ -111,7 +102,7 @@ export function template() {
         </div>
 
         <!-- Victory Overlay -->
-        <div id="mixer-victory-overlay" class="fusion-overlay" style="display: none; z-index: 2000;">
+        <div id="mixer-victory-overlay" class="fusion-overlay" style="z-index: 2000;">
             <div class="fusion-content">
                 <div class="victory-icon-wrap" style="margin-bottom: 1rem;">
                     <i data-lucide="award" style="width: 80px; height: 80px; color: #FFF176;"></i>
@@ -298,26 +289,15 @@ function showFusionResult(recipeOrResult) {
 }
 
 function updateSlotUI(slotNum, data) {
-    const slot = document.getElementById(`mixer-slot-${slotNum}`);
-    const liquid = document.getElementById(`flask-liquid-${slotNum}`);
+    const iconOverlay = document.getElementById(`flask-icon-${slotNum}`);
     const label = document.getElementById(`slot-name-${slotNum}`);
-    if (!slot || !label || !liquid) return;
+    const flask = document.getElementById(`mixer-slot-${slotNum}`);
+    if (!iconOverlay || !label || !flask) return;
     
-    // Add image if missing
-    if (!slot.querySelector('img')) {
-        const img = document.createElement('img');
-        slot.appendChild(img);
-    }
-    const imgElement = slot.querySelector('img');
-    imgElement.src = data.icon;
-    imgElement.alt = data.name;
-
-    slot.classList.add('occupied');
-    liquid.style.setProperty('--liquid-color', data.color);
-    
+    iconOverlay.innerHTML = `<img src="${data.icon}" alt="${data.name}" style="width: 100%; height: 100%;">`;
+    flask.classList.add('occupied');
     label.textContent = data.name;
-    label.style.color = data.color;
-    label.style.fontWeight = '800';
+    label.style.color = 'white';
 }
 
 function checkCombinations() {
@@ -337,31 +317,19 @@ function clearMixer() {
     selectedSlot1 = null;
     selectedSlot2 = null;
     
-    const slot1 = document.getElementById('mixer-slot-1');
-    const liq1 = document.getElementById('flask-liquid-1');
+    const icon1 = document.getElementById('flask-icon-1');
     const label1 = document.getElementById('slot-name-1');
-    if (slot1) {
-        slot1.classList.remove('occupied');
-        if (slot1.querySelector('img')) slot1.querySelector('img').remove();
-    }
-    if (liq1) liq1.style.setProperty('--liquid-color', '#E0E0E0');
-    if (label1) {
-        label1.textContent = 'Ingredient 1';
-        label1.style.color = '#9E9E9E';
-    }
+    const flask1 = document.getElementById('mixer-slot-1');
+    if (icon1) icon1.innerHTML = '';
+    if (flask1) flask1.classList.remove('occupied');
+    if (label1) label1.textContent = 'Ingredient 1';
 
-    const slot2 = document.getElementById('mixer-slot-2');
-    const liq2 = document.getElementById('flask-liquid-2');
+    const icon2 = document.getElementById('flask-icon-2');
     const label2 = document.getElementById('slot-name-2');
-    if (slot2) {
-        slot2.classList.remove('occupied');
-        if (slot2.querySelector('img')) slot2.querySelector('img').remove();
-    }
-    if (liq2) liq2.style.setProperty('--liquid-color', '#E0E0E0');
-    if (label2) {
-        label2.textContent = 'Ingredient 2';
-        label2.style.color = '#9E9E9E';
-    }
+    const flask2 = document.getElementById('mixer-slot-2');
+    if (icon2) icon2.innerHTML = '';
+    if (flask2) flask2.classList.remove('occupied');
+    if (label2) label2.textContent = 'Ingredient 2';
 
     document.querySelectorAll('.choice-bubble').forEach(b => {
         b.classList.remove('selected');

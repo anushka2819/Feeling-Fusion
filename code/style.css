@@ -1,278 +1,270 @@
 /* Premium Lab Styles */
 :root {
     --primary: #4FC3F7;
-    --bg-dark: #1a1a2e;
-    --card-bg: rgba(255, 255, 255, 0.1);
+    --accent: #FF4081; /* Pink for the button */
+    --bg-light: #E1F5FE;
+    --lab-bg: #263238;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --text-main: #FFFFFF;
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --grid-color: rgba(79, 195, 247, 0.2);
 }
+
 body {
     margin: 0;
     padding: 0;
     font-family: 'Outfit', sans-serif;
-    background: #0f0c29;
-    background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29);
-    color: white;
+    background-color: var(--bg-light);
+    background-image: 
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 30px 30px;
+    color: var(--text-main);
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
 }
+
 #app {
     width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .screen {
     display: none;
     width: 100%;
     height: 100%;
 }
 .screen.active {
-    display: block;
-}
-
-.mood-mixer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    height: 100%;
     display: flex;
     flex-direction: column;
 }
+
+/* Lab Container */
+.mood-mixer-container {
+    width: 90%;
+    max-width: 1000px;
+    height: 80%;
+    background: var(--lab-bg);
+    border-radius: 40px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    position: relative;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Buttons */
 .mixer-header {
+    position: absolute;
+    top: -60px;
+    left: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
 }
+
 .circle-btn {
-    background: rgba(255, 255, 255, 0.15);
+    background: white;
     border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    border-radius: 12px;
+    width: 45px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: #263238;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
 }
-.circle-btn:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: scale(1.1);
-}
+.circle-btn:hover { transform: scale(1.1); }
+
+/* Main Area Layout */
 .lab-main-area {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     gap: 20px;
+    height: 100%;
     align-items: center;
-    margin-top: 20px;
 }
+
+/* Side Panels */
+.lab-side-choices {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.side-label {
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
 .choice-grid-2x4 {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(4, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
 }
+
 .choice-bubble {
-    background: var(--card-bg);
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.08);
     border: 2px solid transparent;
-    border-radius: 20px;
-    padding: 15px;
-    cursor: pointer;
-    transition: all 0.3s;
+    border-radius: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: all 0.2s;
 }
-.choice-bubble img {
-    width: 60px;
-    height: 60px;
-}
+.choice-bubble img { width: 40px; height: 40px; }
+.choice-bubble:hover { background: rgba(255, 255, 255, 0.15); }
 .choice-bubble.selected {
-    border-color: var(--primary);
-    background: rgba(79, 195, 247, 0.2);
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(79, 195, 247, 0.4);
-}
-.choice-bubble.disabled-dupe {
-    opacity: 0.3;
-    pointer-events: none;
-    filter: grayscale(1);
+    background: rgba(255, 255, 255, 0.2);
+    border-color: white;
+    transform: scale(1.05);
 }
 
+/* Center Flask Area */
 .lab-flask-area {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(255,255,255,0.05);
-    border-radius: 50px;
-    padding: 40px;
-    border: 1px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
+    position: relative;
 }
+
 .mixer-slots {
     display: flex;
-    align-items: center;
-    gap: 30px;
+    align-items: flex-end;
+    gap: 20px;
+    margin-bottom: 40px;
 }
+
 .plus-symbol {
-    font-size: 3rem;
-    color: rgba(255,255,255,0.3);
-    font-weight: 300;
+    font-size: 2.5rem;
+    color: var(--primary);
+    font-weight: 900;
+    margin-bottom: 40px;
 }
+
 .mixer-slot {
-    width: 140px;
-    height: 180px;
-    background: rgba(255,255,255,0.05);
-    border: 3px dashed rgba(255,255,255,0.2);
-    border-radius: 30px;
+    width: 120px;
+    height: 150px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
-    overflow: hidden;
-}
-.mixer-slot.occupied {
-    border-style: solid;
-    border-color: rgba(255,255,255,0.5);
-}
-.mixer-slot img {
-    width: 80px;
-    height: 80px;
-    z-index: 2;
-}
-.flask-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    z-index: 1;
-}
-.flask-liquid {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 0%;
-    background: var(--liquid-color, #E0E0E0);
-    transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0.4;
-}
-.mixer-slot.occupied .flask-liquid {
-    height: 60%;
-}
-.slot-label {
-    text-align: center;
-    margin-top: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.8rem;
 }
 
-.lab-controls {
-    grid-column: 1 / span 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 40px;
+.beaker-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.3;
 }
-.btn-primary {
-    background: linear-gradient(135deg, #4FC3F7, #0288D1);
-    border: none;
-    padding: 18px 40px;
-    border-radius: 50px;
-    color: white;
+
+.mixer-slot.occupied .beaker-img { opacity: 0.8; }
+
+.slot-label {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
     font-weight: 800;
-    font-size: 1.2rem;
+    color: var(--text-muted);
+}
+
+.slot-icon-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    z-index: 5;
+}
+
+/* Begin Experiment Button */
+.btn-primary {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: 900;
+    font-size: 1.1rem;
     cursor: pointer;
-    box-shadow: 0 10px 30px rgba(79, 195, 247, 0.4);
-    transition: all 0.3s;
     display: flex;
     align-items: center;
+    gap: 10px;
+    box-shadow: 0 0 20px rgba(255, 64, 129, 0.5);
+    transition: all 0.3s;
+    margin-bottom: 30px;
+}
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(255, 64, 129, 0.8);
 }
 .btn-primary.disabled {
-    background: #546e7a;
+    background: #455A64;
     box-shadow: none;
     opacity: 0.5;
     cursor: not-allowed;
 }
-.btn-primary:not(.disabled):hover {
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 15px 40px rgba(79, 195, 247, 0.6);
-}
-.pulse-button {
-    animation: pulse 2s infinite;
-}
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(79, 195, 247, 0.7); }
-    70% { box-shadow: 0 0 0 20px rgba(79, 195, 247, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(79, 195, 247, 0); }
+
+/* Discovery Grid */
+.mixer-discovery-grid {
+    display: flex;
+    gap: 10px;
+    padding: 15px 30px;
+    border: 2px dashed rgba(255,255,255,0.1);
+    border-radius: 20px;
 }
 
+.discovery-slot {
+    width: 50px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.discovery-slot.locked i { color: rgba(255,255,255,0.1); font-size: 1rem; }
+.discovery-slot.unlocked { background: var(--slot-color); }
+.discovery-icon { width: 25px; height: 25px; }
+
+/* Overlay Styles */
 .fusion-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(15px);
     z-index: 1000;
     display: none;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(20px);
 }
-.fusion-overlay.active {
-    display: flex;
-    animation: fadeIn 0.5s forwards;
-}
-.fusion-content {
-    background: rgba(255,255,255,0.05);
-    padding: 50px;
-    border-radius: 40px;
-    text-align: center;
-    max-width: 500px;
-    width: 90%;
-    border: 1px solid rgba(255,255,255,0.1);
-    transform: scale(0.8);
-    opacity: 0;
-    animation: popUp 0.5s 0.2s forwards;
-}
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.fusion-overlay.active { display: flex; }
 
-.fusion-result-img {
-    width: 200px;
-    height: 200px;
-    margin: 0 auto 30px;
-}
-.premium-title { font-weight: 900; letter-spacing: -1px; }
-.premium-subtitle { color: #b0bec5; font-size: 1.1rem; line-height: 1.6; }
-
-.mixer-discovery-grid {
-    display: flex;
-    gap: 15px;
-    margin-top: 30px;
-}
-.discovery-slot {
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-.discovery-slot.unlocked {
-    background: var(--slot-color);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-.discovery-icon { width: 40px; height: 40px; }
+/* Tutorial & Splash (Keeping basic but matching theme) */
+.splash-screen { background: var(--lab-bg); align-items: center; justify-content: center; }
+.tutorial-screen { background: var(--lab-bg); padding: 50px; }
 
 .side-label {
     text-transform: uppercase;
