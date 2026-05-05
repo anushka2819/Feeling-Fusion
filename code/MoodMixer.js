@@ -44,23 +44,29 @@ export function template() {
 
     return /* html */`
     <section id="screen-mood-mixer" class="screen" aria-label="Feeling Fusion Lab">
-        <div class="lab-environment">
             <div class="chalkboard">
-                <div class="formula" style="top: 15%; left: 10%;">H₂O + Joy = ?</div>
-                <div class="formula" style="top: 35%; left: 80%;">NaCl</div>
-                <div class="formula" style="top: 65%; left: 15%;">E = mc²</div>
-                <div class="formula" style="top: 10%; left: 65%;">C₆H₁₂O₆</div>
+                <div id="mission-board" style="position: absolute; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; box-sizing: border-box;">
+                    <h2 style="color: var(--primary); margin: 0; font-size: 1.2rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 2px;">Target Emotion</h2>
+                    <h1 id="target-emotion-name" style="color: white; margin: 10px 0; font-size: 3.5rem; text-shadow: 0 0 20px rgba(255,255,255,0.2);">???</h1>
+                    <p id="target-emotion-desc" style="color: var(--chalk); font-size: 1rem; max-width: 400px; margin: 0;">Use your scientific skills to find the right combination!</p>
+                </div>
             </div>
-            <div class="workbench"></div>
-        </div>
 
         <div class="mood-mixer-container">
-            <header class="mixer-header" style="position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between;">
-                <button id="btn-mixer-back" class="circle-btn" aria-label="Exit">
+            <header class="mixer-header" style="position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; z-index: 100;">
+                <button id="btn-mixer-back" class="circle-btn" title="Exit to Menu">
                     <i data-lucide="log-out"></i>
                 </button>
-                <button id="btn-mixer-settings" class="circle-btn" aria-label="Settings">
-                    <i data-lucide="settings"></i>
+                
+                <div class="mission-status" style="background: rgba(0,0,0,0.4); padding: 10px 20px; border-radius: 20px; color: white; display: flex; align-items: center; gap: 15px; backdrop-filter: blur(5px);">
+                    <div style="text-align: right;">
+                        <div style="font-size: 0.7rem; opacity: 0.7; text-transform: uppercase;">Tries Left</div>
+                        <div id="tries-count" style="font-size: 1.2rem; font-weight: 900; color: #FF4081;">${state.triesLeft}</div>
+                    </div>
+                </div>
+
+                <button id="btn-mixer-tips" class="circle-btn" title="Get a Tip">
+                    <i data-lucide="lightbulb"></i>
                 </button>
             </header>
 
@@ -121,8 +127,20 @@ export function init({ navigate }) {
         navigate('splash');
     });
 
+    document.getElementById('btn-mixer-tips').addEventListener('click', () => {
+        sounds.click();
+        showTip();
+    });
+
     document.getElementById('btn-do-fusion').addEventListener('click', performFusion);
-    document.getElementById('btn-close-fusion').addEventListener('click', closeFusionOverlay);
+    document.getElementById('btn-close-fusion').addEventListener('click', () => {
+        if (state.gameStatus === 'playing') {
+            closeFusionOverlay();
+        } else {
+            // Restart or back to splash if game ended
+            navigate('splash');
+        }
+    });
 
     initChoiceListeners();
 }
@@ -171,8 +189,47 @@ function updateDisabledStates() {
 }
 
 export function onShow() {
+    initNewGame();
     clearMixer();
     renderDiscoveryGrid();
+}
+
+function initNewGame() {
+    state.triesLeft = 4;
+    state.gameStatus = 'playing';
+    
+    // Pick a random recipe as target
+    const randomRecipe = MIXING_RECIPES[Math.floor(Math.random() * MIXING_RECIPES.length)];
+    state.targetEmotion = randomRecipe;
+    
+    // Update UI
+    const targetName = document.getElementById('target-emotion-name');
+    const targetDesc = document.getElementById('target-emotion-desc');
+    const triesCount = document.getElementById('tries-count');
+    
+    if (targetName) targetName.textContent = randomRecipe.result.name;
+    if (targetDesc) targetDesc.textContent = randomRecipe.result.description;
+    if (triesCount) {
+        triesCount.textContent = state.triesLeft;
+        triesCount.style.color = '#FF4081';
+    }
+}
+
+function showTip() {
+    if (!state.targetEmotion) return;
+    
+    // Pick one of the two ingredients
+    const ingredients = [state.targetEmotion.e1, state.targetEmotion.e2];
+    const pickedIngredient = ingredients[Math.floor(Math.random() * ingredients.length)];
+    
+    // Find buttons for this ingredient and add highlight
+    const bubbles = document.querySelectorAll(`.choice-bubble[data-emotion="${pickedIngredient}"]`);
+    bubbles.forEach(b => {
+        b.classList.add('tip-highlight');
+        setTimeout(() => b.classList.remove('tip-highlight'), 3000);
+    });
+    
+    speakText(`Try using ${pickedIngredient} as one of your elements.`);
 }
 
 function renderDiscoveryGrid() {
@@ -234,40 +291,71 @@ async function performFusion() {
     btn.classList.add('disabled');
     btn.disabled = true;
 
-    sounds.mixSuccess();
-
-    if (recipe) {
-        const result = recipe.result;
-        showFusionResult(result);
-        if (!state.discoveredMixes.find(m => m.id === result.id)) {
-            state.discoveredMixes.push(result);
+    if (recipe && recipe.result.id === state.targetEmotion.result.id) {
+        // SUCCESS!
+        sounds.mixSuccess();
+        state.gameStatus = 'won';
+        showFusionResult(recipe.result, true);
+        
+        if (!state.discoveredMixes.find(m => m.id === recipe.result.id)) {
+            state.discoveredMixes.push(recipe.result);
             saveDiscoveredMixes(state.discoveredMixes);
         }
     } else {
-        showFusionResult({
-            id: 'unknown',
-            name: 'Unknown Reaction',
-            description: 'This combination produced a volatile but unidentified emotion.',
-            icon: 'assets/feeling_fusion/surprise_select.svg',
-            color: '#9E9E9E'
-        });
+        // WRONG MIX
+        state.triesLeft--;
+        const triesCount = document.getElementById('tries-count');
+        if (triesCount) {
+            triesCount.textContent = state.triesLeft;
+            if (state.triesLeft <= 1) triesCount.style.color = '#F44336';
+        }
+        
+        if (state.triesLeft <= 0) {
+            state.gameStatus = 'lost';
+            sounds.mixFail();
+            showFusionResult({
+                name: 'Reaction Failed',
+                description: `You ran out of tries! The target was ${state.targetEmotion.result.name}.`,
+                icon: 'assets/feeling_fusion/panic.svg',
+                color: '#263238'
+            }, false);
+        } else {
+            sounds.mixFail();
+            const result = recipe ? recipe.result : { 
+                name: 'Unknown Result', 
+                description: 'This is not the emotion we were looking for. Try again!',
+                icon: 'assets/feeling_fusion/confusion.svg',
+                color: '#9E9E9E'
+            };
+            showFusionResult(result, false);
+        }
     }
 }
 
-function showFusionResult(result) {
+function showFusionResult(result, isWin) {
     const overlay = document.getElementById('fusion-overlay');
     const nameEl = document.getElementById('fusion-result-name');
     const descEl = document.getElementById('fusion-result-desc');
     const characterEl = document.getElementById('fusion-new-character');
     const formulaEl = document.getElementById('fusion-recipe-formula');
+    const closeBtn = document.getElementById('btn-close-fusion');
 
-    nameEl.textContent = result.name;
+    nameEl.textContent = isWin ? 'Experiment Success!' : (state.gameStatus === 'lost' ? 'Lab Closure' : 'Incorrect Mix');
+    nameEl.style.color = isWin ? '#4CAF50' : '#FF5252';
+    
     descEl.textContent = result.description;
     characterEl.innerHTML = `<img src="${result.icon}" style="width: 100%; height: 100%; animation: popIn 0.5s;">`;
-    formulaEl.textContent = `${selectedSlot1.name} + ${selectedSlot2.name}`;
+    formulaEl.textContent = isWin ? `Discovery: ${result.name}` : `Result: ${result.name}`;
+    
+    closeBtn.textContent = isWin ? 'Next Experiment' : (state.gameStatus === 'lost' ? 'Try Again' : 'Keep Trying');
     
     overlay.classList.add('active');
-    speakText(`Success! You discovered ${result.name}!`);
+    
+    if (isWin) {
+        speakText(`Success! You created ${result.name}!`);
+    } else {
+        speakText(`That's not quite right. You have ${state.triesLeft} tries left.`);
+    }
 }
 
 function closeFusionOverlay() {

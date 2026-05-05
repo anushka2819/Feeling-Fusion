@@ -303,3 +303,16 @@ body {
     70% { transform: scale(1.1); }
     100% { transform: scale(1); opacity: 1; }
 }
+
+/* Tip Highlight */
+.tip-highlight {
+    animation: tip-pulse 1s infinite alternate;
+    border-color: #FFEB3B !important;
+    box-shadow: 0 0 30px rgba(255, 235, 59, 0.6) !important;
+    z-index: 50;
+}
+
+@keyframes tip-pulse {
+    0% { transform: scale(1.08); box-shadow: 0 0 10px rgba(255, 235, 59, 0.4); }
+    100% { transform: scale(1.2); box-shadow: 0 0 30px rgba(255, 235, 59, 0.8); }
+}
