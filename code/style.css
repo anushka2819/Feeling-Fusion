@@ -235,8 +235,8 @@ body {
 }
 
 #screen-mood-mixer .chalkboard {
-    top: 80px; 
-    height: 50%;
+    top: 120px; 
+    height: 45%;
     border-top: 10px solid var(--wood-dark);
 }
 
