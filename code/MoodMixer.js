@@ -247,8 +247,16 @@ function initNewGame() {
     state.gameStatus = 'playing';
     
     // Pick a random recipe as target
-    const randomRecipe = MIXING_RECIPES[Math.floor(Math.random() * MIXING_RECIPES.length)];
-    state.targetEmotion = randomRecipe;
+    // Use all complex emotions as questions (priority to undiscovered ones)
+    const undiscovered = MIXING_RECIPES.filter(r => !state.discoveredMixes.includes(r.result.id));
+    
+    if (undiscovered.length > 0) {
+        // Pick the first one in the list for a structured learning path
+        state.targetEmotion = undiscovered[0];
+    } else {
+        // All discovered! Pick a random one for review
+        state.targetEmotion = MIXING_RECIPES[Math.floor(Math.random() * MIXING_RECIPES.length)];
+    }
     
     // Update UI
     const targetName = document.getElementById('target-emotion-name');
@@ -471,7 +479,7 @@ async function performFusion() {
         const unknownResult = {
             name: 'Unstable Reaction',
             description: 'These elements do not fuse together. Try a different combination!',
-            icon: 'assets/feeling_fusion/confusion.svg',
+            icon: 'assets/results/confusion.svg',
             color: '#90A4AE'
         };
 
@@ -505,7 +513,7 @@ function showFusionResult(result, isWin, isGameOver = false) {
     
     nameEl.textContent = result.name;
     descEl.textContent = result.description;
-    iconEl.innerHTML = `<img src="${result.icon || 'assets/feeling_fusion/confusion.svg'}" style="width: 100%; height: 100%; animation: popIn 0.5s;">`;
+    iconEl.innerHTML = `<img src="${result.icon || 'assets/results/confusion.svg'}" style="width: 100%; height: 100%; animation: popIn 0.5s;">`;
     
     closeBtn.textContent = isWin ? 'COLLECT REWARD' : (isGameOver ? 'VIEW LAB REPORT' : 'TRY ANOTHER MIX');
     
