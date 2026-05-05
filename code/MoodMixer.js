@@ -351,20 +351,32 @@ function showNote() {
         'panic': 'This is when everything feels too fast, like when you lose your mom in the supermarket for just a second. Take a deep breath!'
     };
 
-    const e1Name = EMOTIONS_DATA[state.targetEmotion.e1].name;
-    const e2Name = EMOTIONS_DATA[state.targetEmotion.e2].name;
+    // Riddle-style hints for basic emotions
+    const EMOTION_HINTS = {
+        'joy': 'the element of a big, sunny smile',
+        'trust': 'the feeling of being safe with a best friend',
+        'fear': 'the shaky feeling of being a little bit scared',
+        'surprise': 'the "Oh!" feeling when something unexpected happens',
+        'sadness': 'the heavy feeling of a rainy afternoon',
+        'disgust': 'the "Yuck!" feeling when you see something gross',
+        'anger': 'the hot, red feeling of being very mad',
+        'anticipation': 'the orange glow of waiting for something exciting'
+    };
+
+    const hint1 = EMOTION_HINTS[state.targetEmotion.e1] || state.targetEmotion.e1;
+    const hint2 = EMOTION_HINTS[state.targetEmotion.e2] || state.targetEmotion.e2;
     
     const baseText = scenarios[state.targetEmotion.result.id] || state.targetEmotion.result.description;
     scenarioEl.innerHTML = `
         <div style="margin-bottom: 20px;">${baseText}</div>
         <div style="background: rgba(0,0,0,0.05); padding: 15px; border-radius: 10px; border-left: 4px solid #FFAB91;">
             <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #795548; font-weight: 900; margin-bottom: 5px;">Scientific Hint:</div>
-            <div style="font-size: 0.9rem; color: #5D4037;">Try mixing the essence of <b>${e1Name}</b> with the feeling of <b>${e2Name}</b>.</div>
+            <div style="font-size: 0.9rem; color: #5D4037;">To create this reaction, try mixing <b>${hint1}</b> with <b>${hint2}</b>.</div>
         </div>
     `;
     
     overlay.style.display = 'flex';
-    speakText(baseText + `. Hint: mix ${e1Name} and ${e2Name}`);
+    speakText(baseText + `. Hint: mix ${hint1} and ${hint2}`);
 }
 
 function renderDiscoveryGrid() {
