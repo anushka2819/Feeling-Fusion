@@ -292,5 +292,10 @@ export const sounds = {
     mixSuccess() {
         this.shimmer();
         setTimeout(() => this.discovery(), 300);
+    },
+
+    /** Disappointing sound for failed fusion */
+    mixFail() {
+        this.wrong();
     }
 };
