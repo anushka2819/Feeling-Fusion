@@ -27,9 +27,9 @@ export function template() {
             <div class="result-actions">
                 <button id="btn-failure-retry" class="btn-primary" style="background: #546E7A;">
                     <i data-lucide="refresh-cw" style="margin-right: 12px;"></i>
-                    RETRY ANALYSIS
+                    RETRY MISSION
                 </button>
-                <button id="btn-failure-home" class="circle-btn" style="margin-top: 20px;" title="Back to Menu">
+                <button id="btn-failure-home" class="circle-btn" style="margin-top: 20px;" title="Exit to Menu">
                     <i data-lucide="home"></i>
                 </button>
             </div>

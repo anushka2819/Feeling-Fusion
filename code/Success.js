@@ -27,7 +27,10 @@ export function template() {
             <div class="result-actions">
                 <button id="btn-success-continue" class="btn-primary">
                     <i data-lucide="flask-conical" style="margin-right: 12px;"></i>
-                    NEXT EXPERIMENT
+                    NEXT MISSION
+                </button>
+                <button id="btn-success-home" class="circle-btn" style="margin-top: 20px;" title="Exit to Menu">
+                    <i data-lucide="home"></i>
                 </button>
             </div>
         </div>
@@ -38,6 +41,11 @@ export function init({ navigate }) {
     document.getElementById('btn-success-continue').addEventListener('click', () => {
         sounds.click();
         navigate('moodMixer');
+    });
+
+    document.getElementById('btn-success-home').addEventListener('click', () => {
+        sounds.click();
+        navigate('splash');
     });
 }
 
