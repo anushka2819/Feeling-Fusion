@@ -391,6 +391,7 @@ function renderDiscoveryGrid() {
 function updateSlotUI(slotNum, data) {
     const label = document.getElementById(`slot-name-${slotNum}`);
     const liquid = document.getElementById(`liquid-${slotNum}`);
+    const beaker = liquid ? liquid.closest('.beaker-svg') : null;
     if (!label || !liquid) return;
     
     label.textContent = data.name;
@@ -399,6 +400,7 @@ function updateSlotUI(slotNum, data) {
     liquid.setAttribute('fill', data.color);
     liquid.style.height = '60px'; 
     liquid.style.y = '50';
+    if (beaker) beaker.classList.add('animating');
     sounds.pour();
 }
 
@@ -539,8 +541,14 @@ function clearMixer() {
 
     const liq1 = document.getElementById('liquid-1');
     const liq2 = document.getElementById('liquid-2');
-    if (liq1) { liq1.style.height = '0'; liq1.style.y = '110'; }
-    if (liq2) { liq2.style.height = '0'; liq2.style.y = '110'; }
+    if (liq1) { 
+        liq1.style.height = '0'; liq1.style.y = '110'; 
+        liq1.closest('.beaker-svg').classList.remove('animating');
+    }
+    if (liq2) { 
+        liq2.style.height = '0'; liq2.style.y = '110'; 
+        liq2.closest('.beaker-svg').classList.remove('animating');
+    }
 
     document.querySelectorAll('.choice-bubble').forEach(b => {
         b.classList.remove('selected');

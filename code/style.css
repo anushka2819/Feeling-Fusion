@@ -436,10 +436,13 @@ body {
 }
 
 /* --- FLUID ANIMATIONS --- */
+.beaker-svg.animating .liquid-rect {
+    animation: slosh 4s infinite ease-in-out;
+}
+
 .liquid-rect {
     transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: bottom;
-    animation: slosh 4s infinite ease-in-out;
 }
 
 @keyframes slosh {
@@ -448,8 +451,11 @@ body {
     66% { transform: scaleY(0.98) skewX(-0.5deg); }
 }
 
-.fluid-bubble {
+.beaker-svg.animating .fluid-bubble {
     animation: rise var(--bubble-dur, 3s) infinite ease-in;
+}
+
+.fluid-bubble {
     opacity: 0;
 }
 
