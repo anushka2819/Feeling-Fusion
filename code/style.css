@@ -234,6 +234,12 @@ body {
     display: flex; flex-direction: column;
 }
 
+#screen-mood-mixer .chalkboard {
+    top: 135px;
+    height: 520px;
+    border-top: 10px solid var(--wood-dark);
+}
+
 
 .mixer-header {
     height: 80px; width: 100%; display: flex; justify-content: space-between; align-items: center;
