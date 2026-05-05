@@ -22,7 +22,7 @@ body {
 .screen { display: none; width: 100%; height: 100%; }
 .screen.active { display: flex; flex-direction: column; }
 
-/* --- THE LAB ENVIRONMENT --- */
+/* --- THE LAB ENVIRONMENT (Shared) --- */
 .lab-environment {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     z-index: 1; pointer-events: none;
@@ -42,121 +42,60 @@ body {
     background: var(--wood); border-top: 10px solid var(--wood-dark);
 }
 
-/* --- UI CONTAINER --- */
-.mood-mixer-container {
-    width: 100%; height: 100%; position: relative; z-index: 10;
-    display: flex; flex-direction: column;
+/* Chalkboard Formulas */
+.formula {
+    position: absolute;
+    font-family: 'Outfit', sans-serif;
+    color: var(--chalk);
+    font-weight: 300;
+    font-size: 1.2rem;
+    pointer-events: none;
+    opacity: 0.4;
 }
 
-.mixer-header {
-    height: 60px; width: 100%; display: flex; justify-content: space-between; align-items: center;
-    padding: 0 20px; box-sizing: border-box;
-}
-
-.lab-main-area {
-    flex: 1; display: grid; grid-template-columns: 240px 1fr 240px;
-    align-items: center; padding: 0 40px; margin-top: -20px;
-}
-
-.side-label {
-    color: var(--primary); font-weight: 900; text-transform: uppercase;
-    letter-spacing: 2px; margin-bottom: 20px; text-align: center; font-size: 0.9rem;
-}
-
-.choice-grid-2x4 {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-}
-
-.choice-bubble {
-    width: 75px; height: 75px; background: rgba(255,255,255,0.08);
-    border: 2px solid rgba(255,255,255,0.1); border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.2s;
-}
-.choice-bubble:hover { transform: scale(1.05); background: rgba(255,255,255,0.15); }
-.choice-bubble.selected { border-color: var(--primary); background: rgba(79, 195, 247, 0.2); }
-.choice-bubble.disabled { opacity: 0.1; pointer-events: none; filter: grayscale(1); }
-.choice-bubble img { width: 45px; height: 45px; }
-
-/* Flask Area */
-.lab-flask-area {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-}
-
-.mixer-slots {
-    display: flex; align-items: flex-end; gap: 50px; margin-bottom: 50px;
-}
-
-.mixer-slot {
-    width: 130px; height: 160px; position: relative;
-}
-
-.plus-symbol {
-    font-size: 3rem; color: var(--chalk); font-weight: 200; margin-bottom: 60px;
-}
-
-/* Discovery Shelf */
-.discovery-shelf-container {
-    height: 120px; background: rgba(0,0,0,0.5);
-    display: flex; justify-content: center; align-items: center; gap: 20px;
-    border-top: 6px solid rgba(0,0,0,0.6);
-}
-
-.discovery-slot {
-    width: 80px; height: 80px; background: rgba(255,255,255,0.05);
-    border: 1px dashed rgba(255,255,255,0.1); border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-}
-.discovery-slot.unlocked { background: var(--slot-color); border-style: solid; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
-
-/* --- THE POPUP --- */
-.fusion-overlay {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.9); z-index: 9999;
-    display: none; align-items: center; justify-content: center;
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-}
-.fusion-overlay.active { display: flex; }
-
-.fusion-content {
-    background: var(--board-bg); border: 4px solid var(--primary);
-    padding: 50px; border-radius: 40px; text-align: center;
-    max-width: 500px; width: 90%; box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-}
-
+/* --- UI COMPONENTS --- */
 .btn-primary {
     background: #D32F2F; color: white; border: none; padding: 18px 50px;
     border-radius: 15px; font-weight: 900; font-size: 1.3rem; cursor: pointer;
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    display: flex; align-items: center;
+    transition: all 0.2s;
 }
-.btn-primary.disabled { opacity: 0.2; cursor: not-allowed; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(0,0,0,0.4); background: #E53935; }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary.disabled { opacity: 0.2; cursor: not-allowed; transform: none; }
 
 .circle-btn {
     background: white; color: #263238; border: none; width: 45px; height: 45px;
     border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer;
+    transition: all 0.2s;
 }
+.circle-btn:hover { background: var(--primary); color: white; transform: rotate(-10deg) scale(1.1); }
 
 /* --- SPLASH SCREEN --- */
 .splash-screen {
-    background: radial-gradient(circle at center, #263238 0%, #101820 100%);
-    color: white;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: #101820;
 }
 
-.splash-content {
+.splash-overlay {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 600px;
+    justify-content: center;
+    background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
 }
 
 .logo-container {
     position: relative;
-    width: 200px;
-    height: 200px;
-    margin-bottom: 30px;
+    width: 280px;
+    height: 280px;
+    margin-bottom: -20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -164,12 +103,18 @@ body {
 
 .logo-glow {
     position: absolute;
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     background: var(--primary);
-    filter: blur(60px);
-    opacity: 0.3;
+    filter: blur(80px);
+    opacity: 0.4;
     border-radius: 50%;
+    animation: glow-pulse 4s infinite ease-in-out;
+}
+
+@keyframes glow-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(1.3); opacity: 0.6; }
 }
 
 .main-logo-img {
@@ -177,42 +122,179 @@ body {
     height: 100%;
     object-fit: contain;
     z-index: 2;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+    animation: float 6s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
 }
 
 .splash-title {
-    font-size: 4rem;
+    font-size: 5rem;
     font-weight: 900;
-    letter-spacing: 4px;
+    letter-spacing: 6px;
     margin: 0;
-    background: linear-gradient(to bottom, #fff, #ccc);
+    text-transform: uppercase;
+    background: linear-gradient(to bottom, #fff 0%, #aaa 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
 }
 
 .splash-subtitle {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     color: var(--primary);
-    letter-spacing: 8px;
+    letter-spacing: 10px;
     text-transform: uppercase;
-    margin-bottom: 50px;
+    margin-bottom: 60px;
     font-weight: 300;
+    opacity: 0.8;
 }
 
 .pulse-button {
-    animation: pulse 2s infinite;
+    animation: button-pulse 2s infinite ease-in-out;
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.4); }
-    70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(211, 47, 47, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0); }
+@keyframes button-pulse {
+    0%, 100% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.05); filter: brightness(1.2); }
 }
 
 .splash-footer {
     position: absolute;
     bottom: 40px;
     font-size: 0.9rem;
-    opacity: 0.6;
+    color: white;
+    opacity: 0.4;
     letter-spacing: 1px;
+}
+
+/* --- TUTORIAL SCREEN --- */
+.tutorial-screen {
+    background: #1B5E20;
+}
+
+.tutorial-card {
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 40px;
+    padding: 60px;
+    max-width: 900px;
+    width: 90%;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+}
+
+.tutorial-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.tutorial-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.tutorial-step {
+    background: rgba(255,255,255,0.03);
+    padding: 30px;
+    border-radius: 25px;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.3s;
+}
+.tutorial-step:hover { transform: translateY(-10px); background: rgba(255,255,255,0.06); }
+
+.step-icon {
+    width: 60px; height: 60px; background: var(--primary); color: white;
+    border-radius: 20px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem; font-weight: 900; margin-bottom: 20px;
+    box-shadow: 0 15px 30px rgba(79, 195, 247, 0.3);
+}
+
+.step-text h3 { margin: 0 0 10px 0; font-size: 1.4rem; color: white; }
+.step-text p { margin: 0; font-size: 1rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+/* --- MOOD MIXER LAB (Main Game) --- */
+.mood-mixer-container {
+    width: 100%; height: 100%; position: relative; z-index: 10;
+    display: flex; flex-direction: column;
+}
+
+.mixer-header {
+    height: 80px; width: 100%; display: flex; justify-content: space-between; align-items: center;
+    padding: 0 40px; box-sizing: border-box;
+}
+
+.lab-main-area {
+    flex: 1; display: grid; grid-template-columns: 280px 1fr 280px;
+    align-items: center; padding: 0 60px; margin-top: -40px;
+}
+
+.side-label {
+    color: var(--primary); font-weight: 900; text-transform: uppercase;
+    letter-spacing: 3px; margin-bottom: 25px; text-align: center; font-size: 1rem;
+    text-shadow: 0 0 10px rgba(79, 195, 247, 0.3);
+}
+
+.choice-grid-2x4 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+.choice-bubble {
+    width: 90px; height: 90px; background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(255,255,255,0.1); border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s;
+}
+.choice-bubble:hover { transform: scale(1.08); background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+.choice-bubble.selected { border-color: var(--primary); background: rgba(79, 195, 247, 0.15); box-shadow: 0 0 20px rgba(79, 195, 247, 0.2); }
+.choice-bubble.disabled { opacity: 0.1; pointer-events: none; filter: grayscale(1); }
+.choice-bubble img { width: 55px; height: 55px; }
+
+.lab-flask-area { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.mixer-slots { display: flex; align-items: flex-end; gap: 60px; margin-bottom: 60px; }
+.mixer-slot { width: 160px; height: 200px; position: relative; }
+.beaker-svg { width: 100%; height: 100%; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); }
+.plus-symbol { font-size: 4rem; color: var(--chalk); font-weight: 200; margin-bottom: 80px; opacity: 0.5; }
+
+.discovery-shelf-container {
+    height: 140px; background: rgba(0,0,0,0.6);
+    display: flex; justify-content: center; align-items: center; gap: 25px;
+    border-top: 8px solid rgba(0,0,0,0.8);
+}
+
+.discovery-slot {
+    width: 90px; height: 90px; background: rgba(255,255,255,0.03);
+    border: 2px dashed rgba(255,255,255,0.1); border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+}
+.discovery-slot.unlocked { background: var(--slot-color); border-style: solid; box-shadow: 0 15px 30px rgba(0,0,0,0.5); transform: translateY(-5px); }
+
+/* --- OVERLAYS --- */
+.fusion-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.95); z-index: 9999;
+    display: none; align-items: center; justify-content: center;
+    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+}
+.fusion-overlay.active { display: flex; }
+
+.fusion-content {
+    background: var(--board-bg); border: 6px solid var(--primary);
+    padding: 60px; border-radius: 50px; text-align: center;
+    max-width: 600px; width: 90%; box-shadow: 0 50px 150px rgba(0,0,0,0.9);
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
 }
