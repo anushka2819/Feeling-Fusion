@@ -141,6 +141,19 @@ export function template() {
             <div id="discovery-shelf" class="discovery-shelf-container"></div>
         </div>
 
+        <!-- Result Overlay (Popup) -->
+        <div id="fusion-overlay" class="fusion-overlay">
+            <div class="fusion-content" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(30px); border: 2px solid rgba(255,255,255,0.1); border-radius: 40px; padding: 40px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 40px 100px rgba(0,0,0,0.8); animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+                <div id="fusion-icon-container" style="width: 120px; height: 120px; margin: 0 auto 20px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1);">
+                    <div id="fusion-result-icon" style="width: 80px; height: 80px;"></div>
+                </div>
+                <h3 id="fusion-result-status" style="margin: 0; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--primary);">Analysis Result</h3>
+                <h2 id="fusion-result-name" style="font-size: 2.2rem; color: white; margin: 5px 0 15px 0; font-weight: 900;">Discovery!</h2>
+                <p id="fusion-result-desc" style="color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 1.6; margin-bottom: 30px;"></p>
+                <button id="btn-close-fusion" class="btn-primary" style="width: 100%; justify-content: center;">CONTINUE</button>
+            </div>
+        </div>
+
     </section>`;
 }
 
@@ -166,6 +179,11 @@ export function init({ navigate }) {
     document.getElementById('btn-close-note').addEventListener('click', () => {
         sounds.click();
         document.getElementById('note-overlay').style.display = 'none';
+    });
+
+    document.getElementById('btn-close-fusion').addEventListener('click', () => {
+        sounds.click();
+        closeFusionResult();
     });
 
     document.getElementById('btn-do-fusion').addEventListener('click', performFusion);
@@ -389,41 +407,103 @@ async function performFusion() {
     btn.classList.add('disabled');
     btn.disabled = true;
 
-    if (recipe && recipe.result.id === state.targetEmotion.result.id) {
-        // SUCCESS!
-        sounds.mixSuccess();
-        state.gameStatus = 'won';
+    if (recipe) {
+        // VALID RECIPE (regardless if it matches mission)
+        const isTarget = recipe.result.id === state.targetEmotion.result.id;
         state.lastResult = recipe.result;
-        
+
+        // Add to discovery shelf if new
         if (!state.discoveredMixes.find(m => m.id === recipe.result.id)) {
             state.discoveredMixes.push(recipe.result);
             saveDiscoveredMixes(state.discoveredMixes);
         }
-        
-        setTimeout(() => localNavigate('success'), 1500);
-    } else {
-        // WRONG MIX
-        state.triesLeft--;
-        const triesCount = document.getElementById('tries-count');
-        if (triesCount) {
-            triesCount.textContent = state.triesLeft;
-            if (state.triesLeft <= 1) triesCount.style.color = '#F44336';
-        }
-        
-        if (state.triesLeft <= 0) {
-            state.gameStatus = 'lost';
-            sounds.mixFail();
-            setTimeout(() => localNavigate('failure'), 1000);
+
+        if (isTarget) {
+            sounds.mixSuccess();
+            state.gameStatus = 'won';
+            showFusionResult(recipe.result, true);
         } else {
             sounds.mixFail();
-            // Optional: Show a quick feedback overlay or just clear and let try again
-            // For now, let's keep it simple and just clear for another try
-            setTimeout(() => {
-                clearMixer();
-                btn.classList.remove('disabled');
-                btn.disabled = false;
-            }, 1000);
+            state.triesLeft--;
+            updateTriesUI();
+            
+            if (state.triesLeft <= 0) {
+                state.gameStatus = 'lost';
+                showFusionResult(recipe.result, false, true); // Game over
+            } else {
+                showFusionResult(recipe.result, false, false); // Wrong mix, but valid recipe
+            }
         }
+    } else {
+        // INVALID COMBO
+        sounds.mixFail();
+        state.triesLeft--;
+        updateTriesUI();
+
+        const unknownResult = {
+            name: 'Unstable Reaction',
+            description: 'These elements do not fuse together. Try a different combination!',
+            icon: 'assets/feeling_fusion/confusion.svg',
+            color: '#90A4AE'
+        };
+
+        if (state.triesLeft <= 0) {
+            state.gameStatus = 'lost';
+            showFusionResult(unknownResult, false, true);
+        } else {
+            showFusionResult(unknownResult, false, false);
+        }
+    }
+}
+
+function updateTriesUI() {
+    const triesCount = document.getElementById('tries-count');
+    if (triesCount) {
+        triesCount.textContent = state.triesLeft;
+        if (state.triesLeft <= 1) triesCount.style.color = '#F44336';
+    }
+}
+
+function showFusionResult(result, isWin, isGameOver = false) {
+    const overlay = document.getElementById('fusion-overlay');
+    const statusEl = document.getElementById('fusion-result-status');
+    const nameEl = document.getElementById('fusion-result-name');
+    const descEl = document.getElementById('fusion-result-desc');
+    const iconEl = document.getElementById('fusion-result-icon');
+    const closeBtn = document.getElementById('btn-close-fusion');
+
+    statusEl.textContent = isWin ? 'Mission Success!' : (isGameOver ? 'Final Analysis' : 'Incorrect Mix');
+    statusEl.style.color = isWin ? '#4CAF50' : '#FF5252';
+    
+    nameEl.textContent = result.name;
+    descEl.textContent = result.description;
+    iconEl.innerHTML = `<img src="${result.icon || 'assets/feeling_fusion/confusion.svg'}" style="width: 100%; height: 100%; animation: popIn 0.5s;">`;
+    
+    closeBtn.textContent = isWin ? 'COLLECT REWARD' : (isGameOver ? 'VIEW LAB REPORT' : 'TRY ANOTHER MIX');
+    
+    overlay.classList.add('active');
+    
+    if (isWin) {
+        speakText(`Success! You created ${result.name}!`);
+    } else {
+        speakText(`That's not ${state.targetEmotion.result.name}. You created ${result.name}. You have ${state.triesLeft} tries left.`);
+    }
+}
+
+function closeFusionResult() {
+    const overlay = document.getElementById('fusion-overlay');
+    overlay.classList.remove('active');
+    
+    if (state.gameStatus === 'won') {
+        localNavigate('success');
+    } else if (state.gameStatus === 'lost') {
+        localNavigate('failure');
+    } else {
+        clearMixer();
+        renderDiscoveryGrid();
+        const btn = document.getElementById('btn-do-fusion');
+        btn.classList.remove('disabled');
+        btn.disabled = false;
     }
 }
 
