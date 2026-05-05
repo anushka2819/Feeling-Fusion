@@ -57,9 +57,16 @@ export function template() {
                 </button>
                 
                 <!-- Center: Mission Display -->
-                <div class="mission-header" style="flex: 1; display: flex; flex-direction: column; align-items: center; background: rgba(0,0,0,0.4); padding: 10px 40px; border-radius: 40px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
-                    <div style="font-size: 0.7rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 2px; color: var(--primary);">Current Research</div>
-                    <div id="target-emotion-name" style="font-size: 1.8rem; font-weight: 900; color: white; text-shadow: 0 0 10px rgba(255,255,255,0.2);">???</div>
+                <div class="mission-header" style="flex: 1; display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.03); padding: 12px 60px; border-radius: 20px; backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); box-shadow: inset 0 0 20px rgba(255,255,255,0.05); position: relative; overflow: hidden;">
+                    <!-- Technical Brackets -->
+                    <div style="position: absolute; top: 10px; left: 10px; width: 15px; height: 15px; border-top: 2px solid var(--primary); border-left: 2px solid var(--primary); opacity: 0.5;"></div>
+                    <div style="position: absolute; bottom: 10px; right: 10px; width: 15px; height: 15px; border-bottom: 2px solid var(--primary); border-right: 2px solid var(--primary); opacity: 0.5;"></div>
+                    
+                    <div style="font-size: 0.65rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 4px; color: #FFF; margin-bottom: 4px; font-weight: 300;">MISSION TARGET</div>
+                    <div id="target-emotion-name" style="font-size: 2.2rem; font-weight: 900; color: white; text-shadow: 0 0 20px rgba(255,255,255,0.4); font-family: 'Outfit', sans-serif; letter-spacing: 1px;">???</div>
+                    
+                    <!-- Scanning Line Animation -->
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%); animation: scan-line 4s infinite linear; pointer-events: none;"></div>
                 </div>
 
                 <div class="status-actions" style="display: flex; align-items: center; gap: 15px;">
