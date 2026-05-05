@@ -428,9 +428,6 @@ async function performFusion() {
     }
 }
 
-function closeFusionOverlay() {
-    // No longer needed but kept for safety or temporary use
-}
 
 function closeFusionOverlay() {
     document.getElementById('fusion-overlay').classList.remove('active');
