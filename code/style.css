@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Outfit:wght@300;900&display=swap');
+
 :root {
     --primary: #4FC3F7;
     --accent: #FF4081;
@@ -80,7 +82,7 @@ body {
 
 /* --- SPLASH SCREEN --- */
 .splash-screen {
-    background: #101820;
+    background: var(--wall-bg); /* Use wall color as fallback */
 }
 
 .splash-overlay {
@@ -92,7 +94,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
 }
 
 .logo-container {
@@ -136,15 +137,21 @@ body {
 }
 
 .splash-title {
-    font-size: 5rem;
-    font-weight: 900;
-    letter-spacing: 6px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 6rem;
+    font-weight: 700;
     margin: 0;
     text-transform: uppercase;
-    background: linear-gradient(to bottom, #fff 0%, #aaa 100%);
+    background: linear-gradient(to bottom, #FF80AB, #FF4081, #C2185B);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
+    animation: title-float 4s infinite ease-in-out;
+}
+
+@keyframes title-float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-10px) scale(1.02); }
 }
 
 .splash-subtitle {
@@ -177,7 +184,7 @@ body {
 
 /* --- TUTORIAL SCREEN --- */
 .tutorial-screen {
-    background: #101820;
+    background: var(--wall-bg);
 }
 
 
@@ -464,4 +471,347 @@ body {
     20% { opacity: 0.6; }
     80% { opacity: 0.6; }
     100% { transform: translateY(-90px); opacity: 0; }
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 600px) {
+    /* Global Adjustments */
+    .btn-primary {
+        padding: 15px 35px;
+        font-size: 1.1rem;
+        border-radius: 12px;
+    }
+
+    /* Splash Screen Fixes */
+    .logo-container {
+        width: 180px;
+        height: 180px;
+        margin-top: -40px; /* Move up */
+        margin-bottom: 10px;
+    }
+
+    .logo-glow {
+        width: 130px;
+        height: 130px;
+    }
+
+    .splash-title {
+        font-size: 3.2rem;
+        line-height: 0.9;
+        margin: 10px 0;
+        text-align: center;
+        background: linear-gradient(to bottom, #FFEB3B, #FF4081, #4FC3F7); /* Colorful for kids */
+        -webkit-background-clip: text;
+    }
+
+    .splash-subtitle {
+        font-size: 0.85rem;
+        letter-spacing: 3px;
+        margin-bottom: 30px;
+        color: white;
+        opacity: 0.9;
+    }
+
+    /* Tutorial Screen Fixes */
+    .tutorial-card {
+        padding: 30px 20px;
+        width: 85%;
+        border-radius: 30px;
+    }
+
+    .tutorial-header {
+        gap: 15px;
+        margin-bottom: 30px;
+        justify-content: center;
+    }
+
+    .tutorial-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .tutorial-steps {
+        grid-template-columns: 1fr; /* Stack vertically on small screens */
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .tutorial-step {
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        text-align: left;
+    }
+
+    .step-icon {
+        width: 45px;
+        height: 45px;
+        min-width: 45px;
+        font-size: 1.2rem;
+        margin-bottom: 0;
+        border-radius: 12px;
+    }
+
+    .step-text h3 {
+        font-size: 1.1rem;
+        margin-bottom: 2px;
+    }
+
+    .step-text p {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+
+    /* Results Screen Fixes */
+    .result-card {
+        padding: 40px 20px;
+    }
+
+    .emotion-name {
+        font-size: 2.5rem;
+    }
+
+    .result-icon-container {
+        width: 120px;
+        height: 120px;
+    }
+
+    /* --- Mood Mixer Lab Fixes --- */
+    .mood-mixer-container {
+        padding-top: 65px; /* Tighter for no scroll */
+    }
+
+    .mixer-header {
+        flex-direction: row !important;
+        height: 60px !important;
+        padding: 0 8px !important;
+        gap: 4px !important;
+        top: 5px !important;
+        left: 0 !important;
+        right: 0 !important;
+        background: rgba(0,0,0,0.3);
+        backdrop-filter: blur(10px);
+        justify-content: space-between !important;
+    }
+
+    .mission-header {
+        padding: 4px 8px !important;
+        flex: 1 !important;
+        min-width: 0;
+        background: rgba(255,255,255,0.1) !important;
+        border-radius: 10px !important;
+    }
+
+    .mission-header div:first-child {
+        display: none !important;
+    }
+
+    .mission-header #target-emotion-name {
+        font-size: 0.95rem !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .status-actions {
+        width: auto !important;
+        gap: 4px !important;
+    }
+
+    .mission-status {
+        padding: 4px 6px !important;
+        gap: 6px !important;
+        border-radius: 10px !important;
+    }
+
+    .mission-status > div > div:first-child {
+        display: none !important;
+    }
+
+    .circle-btn {
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        border-radius: 8px !important;
+    }
+
+    .circle-btn svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    .lab-main-area {
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 10px !important;
+        gap: 8px !important;
+        align-items: center;
+        flex: 1; /* Take up all space below header */
+        justify-content: center; /* Center items if they don't fill */
+    }
+
+    .side-left { order: 1; margin-top: 110px; }
+    .lab-flask-area { 
+        order: 2; 
+        width: 100%; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center;
+        flex: 1; /* Push others to top/bottom */
+    }
+    .side-right { order: 3; margin-bottom: 70px; }
+
+    .side-label {
+        font-size: 0.8rem !important;
+        margin-bottom: 5px !important;
+    }
+
+    .choice-grid-2x4 {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+
+    .choice-bubble {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+    }
+
+    .choice-bubble img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .mixer-slots {
+        gap: 30px;
+        margin-bottom: 10px;
+    }
+
+    .mixer-slot {
+        width: 130px;
+        height: 165px;
+    }
+
+    .plus-symbol {
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+
+    #btn-do-fusion {
+        padding: 10px 25px;
+        font-size: 1rem;
+        margin-top: 40px;
+    }
+
+    .discovery-shelf-container {
+        height: 80px;
+        gap: 10px;
+        position: relative;
+        z-index: 20;
+        margin-top: -60px; /* Lift it up more */
+    }
+
+    .discovery-slot {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+    }
+
+    .discovery-slot img {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    /* Apply to all screens with lab background */
+    .splash-screen, .tutorial-screen {
+        background: var(--wood) !important;
+    }
+
+    #screen-mood-mixer .chalkboard {
+        height: 100% !important;
+        top: 0;
+    }
+
+    #screen-splash .chalkboard,
+    #screen-tutorial .chalkboard {
+        height: 55% !important;
+        top: 0;
+    }
+
+    #screen-splash .workbench,
+    #screen-tutorial .workbench {
+        display: block;
+        height: 45%;
+        bottom: 0;
+    }
+
+    .hint-badge {
+        position: absolute;
+        top: -7px;
+        right: -7px;
+        background: #FFEB3B;
+        color: #000 !important;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        font-size: 0.75rem;
+        font-weight: 900;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #1B5E20;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .workbench {
+        height: 100px;
+    }
+
+    /* --- Success/Failure Screen Responsive --- */
+    .success-screen, .failure-screen {
+        background: var(--wood) !important;
+    }
+
+    .result-card {
+        padding: 30px 20px !important;
+        border-radius: 30px !important;
+        width: 95% !important;
+    }
+
+    .result-badge {
+        padding: 8px 20px !important;
+        font-size: 0.8rem !important;
+        top: -20px !important;
+    }
+
+    .result-icon-container {
+        width: 110px !important;
+        height: 110px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .result-icon {
+        width: 70px !important;
+        height: 70px !important;
+    }
+
+    .result-icon-fallback {
+        width: 60px !important;
+        height: 60px !important;
+    }
+
+    .emotion-name {
+        font-size: 2.2rem !important;
+        margin: 5px 0 15px 0 !important;
+    }
+
+    .result-desc {
+        font-size: 0.95rem !important;
+        margin-bottom: 25px !important;
+    }
+
+    .result-actions button {
+        width: 100% !important;
+    }
 }

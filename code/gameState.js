@@ -3,7 +3,7 @@ export const state = {
     discoveredMixes: [],
     targetEmotion: null,
     triesLeft: 4,
-    tipsLeft: 3,
+    tipsLeft: 1,
     gameStatus: 'playing', // 'playing', 'won', 'lost'
     lastResult: null,      // Stores the last mixed emotion or target for result screens
     currentLevel: 1

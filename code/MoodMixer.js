@@ -71,25 +71,18 @@ export function template() {
                     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%); animation: scan-line 4s infinite linear; pointer-events: none;"></div>
                 </div>
 
-                <div class="status-actions" style="display: flex; align-items: center; gap: 15px;">
-                    <div class="mission-status" style="background: rgba(0,0,0,0.6); padding: 5px 25px; border-radius: 30px; color: white; display: flex; align-items: center; gap: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
-                        <div style="text-align: center;">
-                            <div style="font-size: 0.6rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px;">Tries</div>
-                            <div id="tries-count" style="font-size: 1.1rem; font-weight: 900; color: #FF4081;">${state.triesLeft}</div>
-                        </div>
-                        <div style="width: 1px; height: 20px; background: rgba(255,255,255,0.1);"></div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 0.6rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px;">Tips</div>
-                            <div id="tips-count" style="font-size: 1.1rem; font-weight: 900; color: #FFEB3B;">${state.tipsLeft}</div>
-                        </div>
+                <div class="status-actions" style="display: flex; align-items: center; gap: 10px;">
+                    <div class="mission-status" style="background: rgba(0,0,0,0.6); padding: 5px 12px; border-radius: 12px; color: white; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
+                        <div id="tries-count" style="font-size: 1.1rem; font-weight: 900; color: #FF4081;">${state.triesLeft}</div>
                     </div>
 
                     <button id="btn-mixer-note" class="circle-btn" title="Read Lab Notes">
                         <i data-lucide="notebook-text"></i>
                     </button>
 
-                    <button id="btn-mixer-tips" class="circle-btn" title="Use a Tip">
+                    <button id="btn-mixer-tips" class="circle-btn" title="Use a Tip" style="position: relative;">
                         <i data-lucide="lightbulb"></i>
+                        <div id="tips-count" class="hint-badge">${state.tipsLeft}</div>
                     </button>
                 </div>
             </header>
@@ -251,7 +244,7 @@ export function onShow() {
 
 function initNewGame() {
     state.triesLeft = 4;
-    state.tipsLeft = 3;
+    state.tipsLeft = 1;
     state.gameStatus = 'playing';
     
     // Pick a random recipe as target
@@ -274,12 +267,14 @@ function initNewGame() {
     
     if (tipsCount) {
         tipsCount.textContent = state.tipsLeft;
+        tipsCount.style.display = 'flex';
         tipsCount.style.color = '#FFEB3B';
     }
 
     if (tipsBtn) {
         tipsBtn.classList.remove('disabled');
         tipsBtn.disabled = false;
+        tipsBtn.style.opacity = '1';
     }
 }
 
@@ -295,8 +290,9 @@ function showTip() {
         if (tipsBtn) {
             tipsBtn.classList.add('disabled');
             tipsBtn.disabled = true;
+            tipsBtn.style.opacity = '0.5';
         }
-        if (tipsCount) tipsCount.style.color = '#9E9E9E';
+        if (tipsCount) tipsCount.style.display = 'none';
     }
     
     // Pick one of the two ingredients
