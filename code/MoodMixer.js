@@ -72,7 +72,7 @@ export function template() {
                 </div>
 
                 <div class="status-actions" style="display: flex; align-items: center; gap: 10px;">
-                    <div class="mission-status" style="background: rgba(0,0,0,0.6); padding: 5px 12px; border-radius: 12px; color: white; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
+                    <div class="mission-status" style="background: rgba(0,0,0,0.6); padding: 5px 12px; border-radius: 12px; color: white; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
                         <div id="tries-count" style="font-size: 1.1rem; font-weight: 900; color: #FF4081;">${state.triesLeft}</div>
                     </div>
 
@@ -88,7 +88,7 @@ export function template() {
             </header>
 
             <!-- Lab Note Overlay -->
-            <div id="note-overlay" class="note-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+            <div id="note-overlay" class="note-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);">
                 <div class="notebook-page" style="background: #FFF9C4; width: 90%; max-width: 400px; padding: 40px; border-radius: 2px 20px 2px 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative; font-family: 'Outfit', sans-serif;">
                     <div style="position: absolute; top: 0; left: 40px; bottom: 0; width: 2px; background: #FFAB91;"></div>
                     <button id="btn-close-note" class="circle-btn" style="position: absolute; top: 15px; right: 15px; background: #ef5350; color: white;">
@@ -145,7 +145,7 @@ export function template() {
 
         <!-- Result Overlay (Popup) -->
         <div id="fusion-overlay" class="fusion-overlay">
-            <div class="fusion-content" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(30px); border: 2px solid rgba(255,255,255,0.1); border-radius: 40px; padding: 40px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 40px 100px rgba(0,0,0,0.8); animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+            <div class="fusion-content" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 2px solid rgba(255,255,255,0.1); border-radius: 40px; padding: 40px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 40px 100px rgba(0,0,0,0.8); animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
                 <div id="fusion-icon-container" style="width: 120px; height: 120px; margin: 0 auto 20px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1);">
                     <div id="fusion-result-icon" style="width: 80px; height: 80px;"></div>
                 </div>
