@@ -13,7 +13,7 @@ let selectedSlot2 = null;
 
 export function template() {
     const basicEmotions = Object.values(EMOTIONS_DATA);
-
+    
     const generateChoiceHtml = (side) => basicEmotions.map((emo) => `
         <button class="choice-bubble choice-${side}" data-emotion="${emo.id}" data-side="${side}" title="${emo.name}" type="button">
             <img src="${emo.icon}" alt="${emo.name}">
@@ -34,9 +34,7 @@ export function template() {
                     <path d="M40 20 L40 50 L10 110 L90 110 L60 50 L60 20 Z" />
                 </clipPath>
             </defs>
-            <!-- Outline -->
             <path d="M40 20 L40 50 L10 110 L90 110 L60 50 L60 20 Z" stroke="white" stroke-width="2" fill="none" />
-            <!-- Liquid -->
             <g clip-path="url(#clip-flask-${id})">
                 <rect id="liquid-${id}" class="liquid-rect" x="0" y="110" width="100" height="0" fill="var(--primary)" opacity="0.7" />
                 ${bubbleHtml(id)}
@@ -75,11 +73,7 @@ export function template() {
                 </div>
 
                 <div class="lab-flask-area">
-                    <div id="mixer-slots-wrap" class="mixer-slots">
-                        <!-- Pour Streams -->
-                        <div id="stream-left" class="pour-stream pour-stream-left"></div>
-                        <div id="stream-right" class="pour-stream pour-stream-right"></div>
-
+                    <div class="mixer-slots">
                         <div id="mixer-slot-1-wrap" class="mixer-slot">
                             <div class="flask-visual">${beakerSvg(1)}</div>
                             <div id="slot-name-1" class="side-label" style="font-size: 0.7rem; margin-top: 10px; color: #78909C;">Ingredient 1</div>
@@ -92,13 +86,6 @@ export function template() {
                             <div id="slot-name-2" class="side-label" style="font-size: 0.7rem; margin-top: 10px; color: #78909C;">Ingredient 2</div>
                         </div>
                     </div>
-
-                    <!-- Hidden Central Reaction Flask -->
-                    <div id="reaction-flask-container" class="reaction-container">
-                        <div class="reaction-flask">${beakerSvg('reaction')}</div>
-                    </div>
-
-                    <div id="blast-effect" class="blast-effect"></div>
 
                     <button id="btn-do-fusion" class="btn-primary disabled" disabled>
                         Begin Experiment!
@@ -170,12 +157,8 @@ function updateDisabledStates() {
     choices.forEach(btn => {
         const emoId = btn.dataset.emotion;
         const side = btn.dataset.side;
-        
-        // Remove existing disabled state
         btn.classList.remove('disabled');
         btn.disabled = false;
-
-        // If this is the OTHER side and it matches our selection, disable it
         if (side === 'right' && selectedSlot1 && emoId === selectedSlot1.id) {
             btn.classList.add('disabled');
             btn.disabled = true;
@@ -201,7 +184,7 @@ function renderDiscoveryGrid() {
         const discovered = state.discoveredMixes[i];
         const slot = document.createElement('div');
         slot.className = discovered ? 'discovery-slot unlocked' : 'discovery-slot locked';
-
+        
         if (discovered) {
             slot.style.setProperty('--slot-color', discovered.color);
             slot.innerHTML = `<img src="${discovered.icon}" style="width: 45px; height: 45px;" alt="${discovered.name}">`;
@@ -217,12 +200,12 @@ function updateSlotUI(slotNum, data) {
     const label = document.getElementById(`slot-name-${slotNum}`);
     const liquid = document.getElementById(`liquid-${slotNum}`);
     if (!label || !liquid) return;
-
+    
     label.textContent = data.name;
     label.style.color = 'white';
-
+    
     liquid.setAttribute('fill', data.color);
-    liquid.style.height = '60px'; // Fills halfway
+    liquid.style.height = '60px'; 
     liquid.style.y = '50';
     sounds.pour();
 }
@@ -242,7 +225,7 @@ function checkCombinations() {
 async function performFusion() {
     if (!selectedSlot1 || !selectedSlot2) return;
 
-    const recipe = MIXING_RECIPES.find(r =>
+    const recipe = MIXING_RECIPES.find(r => 
         (r.e1 === selectedSlot1.id && r.e2 === selectedSlot2.id) ||
         (r.e1 === selectedSlot2.id && r.e2 === selectedSlot1.id)
     );
@@ -251,65 +234,24 @@ async function performFusion() {
     btn.classList.add('disabled');
     btn.disabled = true;
 
-    // 1. Pouring
-    const slotsWrap = document.getElementById('mixer-slots-wrap');
-    const s1 = document.getElementById('mixer-slot-1-wrap');
-    const s2 = document.getElementById('mixer-slot-2-wrap');
-    const streamL = document.getElementById('stream-left');
-    const streamR = document.getElementById('stream-right');
+    sounds.mixSuccess();
 
-    slotsWrap.classList.add('pouring');
-    s1.classList.add('pouring-left');
-    s2.classList.add('pouring-right');
-
-    // Color streams
-    streamL.style.background = selectedSlot1.color;
-    streamR.style.background = selectedSlot2.color;
-
-    sounds.pour();
-
-    // 2. Drain side flasks
-    document.getElementById('liquid-1').style.height = '0';
-    document.getElementById('liquid-1').style.y = '110';
-    document.getElementById('liquid-2').style.height = '0';
-    document.getElementById('liquid-2').style.y = '110';
-
-    // 3. Show reaction flask and fill it
-    setTimeout(() => {
-        const reactionContainer = document.getElementById('reaction-flask-container');
-        reactionContainer.classList.add('active');
-        const reactionLiq = document.getElementById('liquid-reaction');
-        reactionLiq.setAttribute('fill', 'white');
-        reactionLiq.style.height = '80px';
-        reactionLiq.style.y = '30';
-    }, 600);
-
-    // 4. Blast
-    setTimeout(() => {
-        const blast = document.getElementById('blast-effect');
-        blast.classList.add('active');
-        sounds.mixSuccess();
-    }, 1400);
-
-    // 5. Result
-    setTimeout(() => {
-        if (recipe) {
-            const result = recipe.result;
-            showFusionResult(result);
-            if (!state.discoveredMixes.find(m => m.id === result.id)) {
-                state.discoveredMixes.push(result);
-                saveDiscoveredMixes(state.discoveredMixes);
-            }
-        } else {
-            showFusionResult({
-                id: 'unknown',
-                name: 'Unknown Reaction',
-                description: 'This combination produced a volatile but unidentified emotion.',
-                icon: 'assets/feeling_fusion/surprise_select.svg',
-                color: '#9E9E9E'
-            });
+    if (recipe) {
+        const result = recipe.result;
+        showFusionResult(result);
+        if (!state.discoveredMixes.find(m => m.id === result.id)) {
+            state.discoveredMixes.push(result);
+            saveDiscoveredMixes(state.discoveredMixes);
         }
-    }, 2200);
+    } else {
+        showFusionResult({
+            id: 'unknown',
+            name: 'Unknown Reaction',
+            description: 'This combination produced a volatile but unidentified emotion.',
+            icon: 'assets/feeling_fusion/surprise_select.svg',
+            color: '#9E9E9E'
+        });
+    }
 }
 
 function showFusionResult(result) {
@@ -323,23 +265,13 @@ function showFusionResult(result) {
     descEl.textContent = result.description;
     characterEl.innerHTML = `<img src="${result.icon}" style="width: 100%; height: 100%; animation: popIn 0.5s;">`;
     formulaEl.textContent = `${selectedSlot1.name} + ${selectedSlot2.name}`;
-
+    
     overlay.classList.add('active');
     speakText(`Success! You discovered ${result.name}!`);
 }
 
 function closeFusionOverlay() {
     document.getElementById('fusion-overlay').classList.remove('active');
-    document.getElementById('reaction-flask-container').classList.remove('active');
-    document.getElementById('blast-effect').classList.remove('active');
-
-    const slotsWrap = document.getElementById('mixer-slots-wrap');
-    const s1 = document.getElementById('mixer-slot-1-wrap');
-    const s2 = document.getElementById('mixer-slot-2-wrap');
-    slotsWrap.classList.remove('pouring');
-    s1.classList.remove('pouring-left');
-    s2.classList.remove('pouring-right');
-
     clearMixer();
     renderDiscoveryGrid();
 }

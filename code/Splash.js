@@ -9,7 +9,7 @@ export function template() {
         <div class="splash-content">
             <div class="logo-container">
                 <div class="logo-glow"></div>
-                <i data-lucide="beaker" class="main-logo-icon"></i>
+                <img src="assets/logo.svg" alt="Feeling Fusion Logo" class="main-logo-img">
             </div>
             <h1 class="splash-title">FEELING FUSION</h1>
             <p class="splash-subtitle">The Feeling Fusion Lab</p>

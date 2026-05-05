@@ -1,0 +1,41 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="liquid-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#A855F7" />
+            <stop offset="50%" stop-color="#EC4899" />
+            <stop offset="100%" stop-color="#06B6D4" />
+        </linearGradient>
+        <filter id="flask-shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="15" stdDeviation="20" flood-opacity="0.4" />
+        </filter>
+    </defs>
+    
+    <!-- Shadow -->
+    <ellipse cx="256" cy="480" rx="160" ry="20" fill="#1E293B" fill-opacity="0.1" />
+
+    <!-- Flask Glass Body (Erlenmeyer Shape) -->
+    <g filter="url(#flask-shadow)">
+        <!-- The Glass Outline -->
+        <path d="M200 80H312M215 80V180L100 420C100 442 118 460 140 460H372C394 460 412 442 412 420L297 180V80" stroke="#334155" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="white" fill-opacity="0.05" />
+        
+        <!-- Liquid Content -->
+        <path d="M140 440C125 440 120 430 125 420L200 260C200 260 256 240 312 260L387 420C392 430 387 440 372 440H140Z" fill="url(#liquid-grad)" />
+        
+        <!-- Glass Highlights -->
+        <path d="M370 380L385 410" stroke="white" stroke-width="10" stroke-linecap="round" opacity="0.3" />
+        <path d="M230 100V160" stroke="white" stroke-width="6" stroke-linecap="round" opacity="0.1" />
+    </g>
+
+    <!-- Bubbles & Sparkles -->
+    <g opacity="0.6">
+        <circle cx="220" cy="320" r="12" fill="white" />
+        <circle cx="300" cy="380" r="8" fill="white" />
+        <circle cx="260" cy="280" r="6" fill="white" />
+        
+        <!-- Heart in the center -->
+        <path d="M256 340C256 340 250 332 238 332C226 332 222 342 222 350C222 365 256 385 256 385C256 385 290 365 290 350C290 342 286 332 274 332C262 332 256 340 256 340Z" fill="white" />
+    </g>
+
+    <!-- Rim Detail -->
+    <path d="M200 80C200 70 312 70 312 80" stroke="#334155" stroke-width="16" stroke-linecap="round" />
+</svg>
