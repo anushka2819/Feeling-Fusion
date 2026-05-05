@@ -2,13 +2,17 @@
 import * as Splash from './code/Splash.js';
 import * as Tutorial from './code/Tutorial.js';
 import * as MoodMixer from './code/MoodMixer.js';
+import * as Success from './code/Success.js';
+import * as Failure from './code/Failure.js';
 
 const app = document.getElementById('app');
 
 const screens = {
     splash: Splash,
     tutorial: Tutorial,
-    moodMixer: MoodMixer
+    moodMixer: MoodMixer,
+    success: Success,
+    failure: Failure
 };
 
 function navigate(screenId) {

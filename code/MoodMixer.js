@@ -120,15 +120,6 @@ export function template() {
             <div id="discovery-shelf" class="discovery-shelf-container"></div>
         </div>
 
-        <div id="fusion-overlay" class="fusion-overlay">
-            <div class="fusion-content">
-                <div id="fusion-new-character" style="width: 100px; height: 100px; margin: 0 auto 20px;"></div>
-                <h2 id="fusion-result-name" style="font-size: 2rem; color: white; margin: 0;">New Discovery!</h2>
-                <p id="fusion-recipe-formula" style="color: var(--primary); font-weight: 800; margin: 10px 0;"></p>
-                <p id="fusion-result-desc" style="color: rgba(255,255,255,0.7); font-size: 0.9rem;"></p>
-                <button id="btn-close-fusion" class="btn-primary" style="margin-top: 20px; width: 100%;">Collect Emotion</button>
-            </div>
-        </div>
     </section>`;
 }
 
@@ -144,14 +135,6 @@ export function init({ navigate }) {
     });
 
     document.getElementById('btn-do-fusion').addEventListener('click', performFusion);
-    document.getElementById('btn-close-fusion').addEventListener('click', () => {
-        if (state.gameStatus === 'playing') {
-            closeFusionOverlay();
-        } else {
-            // Restart or back to splash if game ended
-            navigate('splash');
-        }
-    });
 
     initChoiceListeners();
 }
@@ -333,12 +316,14 @@ async function performFusion() {
         // SUCCESS!
         sounds.mixSuccess();
         state.gameStatus = 'won';
-        showFusionResult(recipe.result, true);
+        state.lastResult = recipe.result;
         
         if (!state.discoveredMixes.find(m => m.id === recipe.result.id)) {
             state.discoveredMixes.push(recipe.result);
             saveDiscoveredMixes(state.discoveredMixes);
         }
+        
+        setTimeout(() => navigate('success'), 1500);
     } else {
         // WRONG MIX
         state.triesLeft--;
@@ -351,49 +336,22 @@ async function performFusion() {
         if (state.triesLeft <= 0) {
             state.gameStatus = 'lost';
             sounds.mixFail();
-            showFusionResult({
-                name: 'Reaction Failed',
-                description: `You ran out of tries! The target was ${state.targetEmotion.result.name}.`,
-                icon: 'assets/feeling_fusion/panic.svg',
-                color: '#263238'
-            }, false);
+            setTimeout(() => navigate('failure'), 1000);
         } else {
             sounds.mixFail();
-            const result = recipe ? recipe.result : { 
-                name: 'Unknown Result', 
-                description: 'This is not the emotion we were looking for. Try again!',
-                icon: 'assets/feeling_fusion/confusion.svg',
-                color: '#9E9E9E'
-            };
-            showFusionResult(result, false);
+            // Optional: Show a quick feedback overlay or just clear and let try again
+            // For now, let's keep it simple and just clear for another try
+            setTimeout(() => {
+                clearMixer();
+                btn.classList.remove('disabled');
+                btn.disabled = false;
+            }, 1000);
         }
     }
 }
 
-function showFusionResult(result, isWin) {
-    const overlay = document.getElementById('fusion-overlay');
-    const nameEl = document.getElementById('fusion-result-name');
-    const descEl = document.getElementById('fusion-result-desc');
-    const characterEl = document.getElementById('fusion-new-character');
-    const formulaEl = document.getElementById('fusion-recipe-formula');
-    const closeBtn = document.getElementById('btn-close-fusion');
-
-    nameEl.textContent = isWin ? 'Experiment Success!' : (state.gameStatus === 'lost' ? 'Lab Closure' : 'Incorrect Mix');
-    nameEl.style.color = isWin ? '#4CAF50' : '#FF5252';
-    
-    descEl.textContent = result.description;
-    characterEl.innerHTML = `<img src="${result.icon}" style="width: 100%; height: 100%; animation: popIn 0.5s;">`;
-    formulaEl.textContent = isWin ? `Discovery: ${result.name}` : `Result: ${result.name}`;
-    
-    closeBtn.textContent = isWin ? 'Next Experiment' : (state.gameStatus === 'lost' ? 'Try Again' : 'Keep Trying');
-    
-    overlay.classList.add('active');
-    
-    if (isWin) {
-        speakText(`Success! You created ${result.name}!`);
-    } else {
-        speakText(`That's not quite right. You have ${state.triesLeft} tries left.`);
-    }
+function closeFusionOverlay() {
+    // No longer needed but kept for safety or temporary use
 }
 
 function closeFusionOverlay() {
