@@ -142,7 +142,7 @@ body {
     font-weight: 700;
     margin: 0;
     text-transform: uppercase;
-    background: linear-gradient(to bottom, #FF80AB, #FF4081, #C2185B);
+    background: linear-gradient(to bottom, #4DB6AC, #26A69A, #FFAB91);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
@@ -500,8 +500,9 @@ body {
         line-height: 0.9;
         margin: 10px 0;
         text-align: center;
-        background: linear-gradient(to bottom, #FFEB3B, #FF4081, #4FC3F7); /* Colorful for kids */
+        background: linear-gradient(to bottom, #4DB6AC, #26A69A, #FFAB91);
         -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
     .splash-subtitle {
@@ -815,4 +816,16 @@ body {
     .result-actions button {
         width: 100% !important;
     }
+}
+
+/* --- Eye-Catching Notes Button --- */
+#btn-mixer-note {
+    animation: note-pulse 3s infinite ease-in-out;
+    position: relative;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+@keyframes note-pulse {
+    0%, 100% { transform: scale(1) rotate(0deg); box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); }
+    50% { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 25px rgba(255, 255, 255, 0.4); border-color: rgba(255, 255, 255, 0.6); }
 }

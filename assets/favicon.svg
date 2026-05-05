@@ -1,8 +1,8 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="fav-vibrant" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#FF0080" />
-            <stop offset="100%" stop-color="#7928CA" />
+            <stop offset="0%" stop-color="#26A69A" />
+            <stop offset="100%" stop-color="#FFAB91" />
         </linearGradient>
     </defs>
     <!-- Bold Flask Silhouette -->

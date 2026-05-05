@@ -23,24 +23,32 @@ export function template() {
                 <div class="tutorial-step">
                     <div class="step-icon">1</div>
                     <div class="step-text">
-                        <h3>Check Mission</h3>
-                        <p>Look at the <b>Clipboard</b> to see your target emotion for this level.</p>
+                        <h3>Identify the Target</h3>
+                        <p>Look at the <b>Mission Target</b> at the top. This is the new emotion you need to create!</p>
                     </div>
                 </div>
 
                 <div class="tutorial-step">
                     <div class="step-icon">2</div>
                     <div class="step-text">
-                        <h3>Read Notes</h3>
-                        <p>Click the <b>Note Icon</b> for a helpful story about the emotion you're making.</p>
+                        <h3>Pick Your Elements</h3>
+                        <p>Emotions are like recipes! Select <b>one item from the top row</b> and <b>one from the bottom row</b>.</p>
                     </div>
                 </div>
 
                 <div class="tutorial-step">
                     <div class="step-icon">3</div>
                     <div class="step-text">
-                        <h3>Limited Tries</h3>
-                        <p>You have 4 tries! If you're stuck, click the <b>Lightbulb</b> for a scientific tip.</p>
+                        <h3>Mix and Discover</h3>
+                        <p>Click <b>Begin Experiment</b> to see the reaction. If you're right, you'll unlock a new discovery!</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-step">
+                    <div class="step-icon">4</div>
+                    <div class="step-text">
+                        <h3>Use Your Lab Tools</h3>
+                        <p>Check the <b>Notebook</b> for a clue, or the <b>Lightbulb</b> for a tip. You have 4 tries—use them wisely!</p>
                     </div>
                 </div>
             </div>

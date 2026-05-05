@@ -10,7 +10,6 @@ export function template() {
             <div class="chalkboard">
                 <div class="formula" style="top: 15%; left: 10%;">Happiness = ?</div>
                 <div class="formula" style="top: 40%; left: 80%;">Mix₂</div>
-                <div class="formula" style="top: 70%; left: 15%;">Emo + Fusion</div>
                 <div class="formula" style="top: 20%; left: 65%;">Lab #42</div>
             </div>
             <div class="workbench"></div>

@@ -49,7 +49,6 @@ export function template() {
             <div class="chalkboard">
                 <div class="formula" style="top: 15%; left: 10%;">H₂O + Joy = ?</div>
                 <div class="formula" style="top: 40%; left: 80%;">Mix₂</div>
-                <div class="formula" style="top: 70%; left: 15%;">Emo + Fusion</div>
             </div>
 
         <div class="mood-mixer-container">

@@ -1,37 +1,36 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
-        <!-- Vibrant Liquid Gradient -->
+        <!-- Theme Liquid Gradient (Teal to Soft Pink) -->
         <linearGradient id="liquid-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#FF0080" /> <!-- Hot Pink -->
-            <stop offset="100%" stop-color="#7928CA" /> <!-- Purple -->
+            <stop offset="0%" stop-color="#26A69A" />
+            <stop offset="100%" stop-color="#FFAB91" />
         </linearGradient>
         
-        <!-- Glow Filter -->
+        <!-- Discovery Glow -->
         <filter id="glow-effect" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="10" result="blur" />
+            <feGaussianBlur stdDeviation="12" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
         </filter>
     </defs>
 
-    <!-- Outer Glow Aura -->
-    <circle cx="256" cy="280" r="160" fill="#FF0080" opacity="0.1" filter="url(#glow-effect)" />
+    <!-- Outer Glow Aura (Teal) -->
+    <circle cx="256" cy="280" r="180" fill="#26A69A" opacity="0.15" filter="url(#glow-effect)" />
 
     <!-- Glass Flask Body -->
-    <!-- The "Glass" container -->
     <path d="M210 60H302M220 60V180L100 420C90 445 110 460 135 460H377C402 460 422 445 412 420L292 180V60" 
-          stroke="white" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" />
+          stroke="white" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
     
-    <!-- Liquid Content (Fills more space) -->
+    <!-- Liquid Content -->
     <path d="M145 440C125 440 120 430 130 410L220 220C220 220 256 200 292 220L382 410C392 430 387 440 367 440H145Z" 
           fill="url(#liquid-gradient)" />
 
-    <!-- Swirling Energy Detail -->
-    <path d="M190 380Q256 420 322 380" stroke="white" stroke-width="6" stroke-linecap="round" opacity="0.3" />
+    <!-- Swirling Energy -->
+    <path d="M190 380Q256 420 322 380" stroke="white" stroke-width="6" stroke-linecap="round" opacity="0.4" />
 
-    <!-- The Heart Core (Glowing) -->
+    <!-- Discovery Heart Core -->
     <g filter="url(#glow-effect)">
         <path d="M256 300C256 300 248 288 232 288C216 288 210 302 210 312C210 335 256 360 256 360C256 360 302 335 302 312C302 302 296 288 280 288C264 288 256 300 256 300Z" 
-              fill="white" />
+              fill="#FFEB3B" />
     </g>
 
     <!-- Bubbles -->
