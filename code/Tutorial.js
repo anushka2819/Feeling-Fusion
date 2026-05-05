@@ -23,24 +23,24 @@ export function template() {
                 <div class="tutorial-step">
                     <div class="step-icon">1</div>
                     <div class="step-text">
-                        <h3>Pick Elements</h3>
-                        <p>Select emotions from the side panels. Each element is unique!</p>
+                        <h3>Check Mission</h3>
+                        <p>Look at the <b>Clipboard</b> to see your target emotion for this level.</p>
                     </div>
                 </div>
 
                 <div class="tutorial-step">
                     <div class="step-icon">2</div>
                     <div class="step-text">
-                        <h3>Mix & Fuse</h3>
-                        <p>Combine two feelings and press "Start Experiment" to see the reaction.</p>
+                        <h3>Read Notes</h3>
+                        <p>Click the <b>Note Icon</b> for a helpful story about the emotion you're making.</p>
                     </div>
                 </div>
 
                 <div class="tutorial-step">
                     <div class="step-icon">3</div>
                     <div class="step-text">
-                        <h3>Build Collection</h3>
-                        <p>Discover rare emotions and complete your scientific collection.</p>
+                        <h3>Limited Tries</h3>
+                        <p>You have 4 tries! If you're stuck, click the <b>Lightbulb</b> for a scientific tip.</p>
                     </div>
                 </div>
             </div>
