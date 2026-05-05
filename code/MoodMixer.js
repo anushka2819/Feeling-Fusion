@@ -51,42 +51,39 @@ export function template() {
             </div>
 
         <div class="mood-mixer-container">
-            <header class="mixer-header" style="position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; z-index: 100;">
+            <header class="mixer-header" style="position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; z-index: 100; align-items: center; gap: 20px;">
                 <button id="btn-mixer-back" class="circle-btn" title="Exit to Menu">
                     <i data-lucide="log-out"></i>
                 </button>
                 
-                <div class="mission-status" style="background: rgba(0,0,0,0.6); padding: 5px 25px; border-radius: 30px; color: white; display: flex; align-items: center; gap: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
-                    <div style="text-align: center;">
-                        <div style="font-size: 0.6rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px;">Tries</div>
-                        <div id="tries-count" style="font-size: 1.1rem; font-weight: 900; color: #FF4081;">${state.triesLeft}</div>
-                    </div>
-                    <div style="width: 1px; height: 20px; background: rgba(255,255,255,0.1);"></div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 0.6rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px;">Tips</div>
-                        <div id="tips-count" style="font-size: 1.1rem; font-weight: 900; color: #FFEB3B;">${state.tipsLeft}</div>
-                    </div>
+                <!-- Center: Mission Display -->
+                <div class="mission-header" style="flex: 1; display: flex; flex-direction: column; align-items: center; background: rgba(0,0,0,0.4); padding: 10px 40px; border-radius: 40px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+                    <div style="font-size: 0.7rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 2px; color: var(--primary);">Current Research</div>
+                    <div id="target-emotion-name" style="font-size: 1.8rem; font-weight: 900; color: white; text-shadow: 0 0 10px rgba(255,255,255,0.2);">???</div>
                 </div>
 
-                <button id="btn-mixer-tips" class="circle-btn" title="Use a Tip">
-                    <i data-lucide="lightbulb"></i>
-                </button>
-            </header>
+                <div class="status-actions" style="display: flex; align-items: center; gap: 15px;">
+                    <div class="mission-status" style="background: rgba(0,0,0,0.6); padding: 5px 25px; border-radius: 30px; color: white; display: flex; align-items: center; gap: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.6rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px;">Tries</div>
+                            <div id="tries-count" style="font-size: 1.1rem; font-weight: 900; color: #FF4081;">${state.triesLeft}</div>
+                        </div>
+                        <div style="width: 1px; height: 20px; background: rgba(255,255,255,0.1);"></div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.6rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px;">Tips</div>
+                            <div id="tips-count" style="font-size: 1.1rem; font-weight: 900; color: #FFEB3B;">${state.tipsLeft}</div>
+                        </div>
+                    </div>
 
-            <!-- Mission Clipboard -->
-            <div class="mission-clipboard" style="position: absolute; bottom: 160px; left: 40px; background: #fff; padding: 20px; width: 220px; border-radius: 5px 5px 20px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: rotate(-2deg); z-index: 50;">
-                <div style="width: 60px; height: 15px; background: #90A4AE; position: absolute; top: -5px; left: 50%; transform: translateX(-50%); border-radius: 3px;"></div>
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #ECEFF1; padding-bottom: 5px; margin-bottom: 10px;">
-                    <h3 style="color: #263238; margin: 0; font-size: 0.7rem; text-transform: uppercase;">Research Goal</h3>
-                    <button id="btn-mixer-note" class="circle-btn" style="width: 28px; height: 28px; border-radius: 8px; background: #ECEFF1;" title="Read Lab Notes">
-                        <i data-lucide="notebook-text" style="width: 16px; height: 16px;"></i>
+                    <button id="btn-mixer-note" class="circle-btn" title="Read Lab Notes">
+                        <i data-lucide="notebook-text"></i>
+                    </button>
+
+                    <button id="btn-mixer-tips" class="circle-btn" title="Use a Tip">
+                        <i data-lucide="lightbulb"></i>
                     </button>
                 </div>
-
-                <div id="target-emotion-name" style="color: #D32F2F; font-size: 1.8rem; font-weight: 900; margin: 10px 0;">???</div>
-                <p id="target-emotion-desc" style="color: #546E7A; font-size: 0.8rem; line-height: 1.4; margin: 0;">Select elements to begin analysis.</p>
-            </div>
+            </header>
 
             <!-- Lab Note Overlay -->
             <div id="note-overlay" class="note-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
@@ -239,7 +236,6 @@ function initNewGame() {
     const tipsBtn = document.getElementById('btn-mixer-tips');
     
     if (targetName) targetName.textContent = randomRecipe.result.name;
-    if (targetDesc) targetDesc.textContent = randomRecipe.result.description;
     
     if (triesCount) {
         triesCount.textContent = state.triesLeft;
