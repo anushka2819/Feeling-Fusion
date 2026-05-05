@@ -409,7 +409,7 @@ function updateSlotUI(slotNum, data) {
     label.textContent = data.name;
     label.style.color = 'white';
     
-    liquid.setAttribute('fill', data.color);
+    liquid.style.fill = data.color;
     liquid.style.height = '60px'; 
     liquid.style.y = '50';
     if (beaker) beaker.classList.add('animating');
