@@ -76,9 +76,33 @@ export function template() {
             <!-- Mission Clipboard -->
             <div class="mission-clipboard" style="position: absolute; bottom: 160px; left: 40px; background: #fff; padding: 20px; width: 220px; border-radius: 5px 5px 20px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: rotate(-2deg); z-index: 50;">
                 <div style="width: 60px; height: 15px; background: #90A4AE; position: absolute; top: -5px; left: 50%; transform: translateX(-50%); border-radius: 3px;"></div>
-                <h3 style="color: #263238; margin: 0 0 10px 0; font-size: 0.7rem; text-transform: uppercase; border-bottom: 2px solid #ECEFF1; padding-bottom: 5px;">Research Goal</h3>
+                
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #ECEFF1; padding-bottom: 5px; margin-bottom: 10px;">
+                    <h3 style="color: #263238; margin: 0; font-size: 0.7rem; text-transform: uppercase;">Research Goal</h3>
+                    <button id="btn-mixer-note" class="circle-btn" style="width: 28px; height: 28px; border-radius: 8px; background: #ECEFF1;" title="Read Lab Notes">
+                        <i data-lucide="notebook-text" style="width: 16px; height: 16px;"></i>
+                    </button>
+                </div>
+
                 <div id="target-emotion-name" style="color: #D32F2F; font-size: 1.8rem; font-weight: 900; margin: 10px 0;">???</div>
                 <p id="target-emotion-desc" style="color: #546E7A; font-size: 0.8rem; line-height: 1.4; margin: 0;">Select elements to begin analysis.</p>
+            </div>
+
+            <!-- Lab Note Overlay -->
+            <div id="note-overlay" class="note-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+                <div class="notebook-page" style="background: #FFF9C4; width: 90%; max-width: 400px; padding: 40px; border-radius: 2px 20px 2px 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative; font-family: 'Outfit', sans-serif;">
+                    <div style="position: absolute; top: 0; left: 40px; bottom: 0; width: 2px; background: #FFAB91;"></div>
+                    <button id="btn-close-note" class="circle-btn" style="position: absolute; top: 15px; right: 15px; background: #ef5350; color: white;">
+                        <i data-lucide="x"></i>
+                    </button>
+                    
+                    <h2 style="color: #5D4037; border-bottom: 2px dashed #BCAAA4; padding-bottom: 10px; margin-bottom: 20px; font-size: 1.2rem; text-transform: uppercase;">Lab Notebook</h2>
+                    <p style="color: #795548; font-size: 0.9rem; line-height: 1.8; margin: 0;">
+                        <strong>Observation:</strong><br>
+                        <span id="emotion-scenario">This feeling happens when you're waiting for a surprise party!</span>
+                    </p>
+                    <div style="margin-top: 30px; text-align: right; font-size: 0.8rem; color: #BCAAA4; font-style: italic;">- Chief Scientist</div>
+                </div>
             </div>
 
             <div class="lab-main-area">
@@ -132,6 +156,16 @@ export function init({ navigate }) {
     document.getElementById('btn-mixer-tips').addEventListener('click', () => {
         sounds.click();
         showTip();
+    });
+
+    document.getElementById('btn-mixer-note').addEventListener('click', () => {
+        sounds.click();
+        showNote();
+    });
+
+    document.getElementById('btn-close-note').addEventListener('click', () => {
+        sounds.click();
+        document.getElementById('note-overlay').style.display = 'none';
     });
 
     document.getElementById('btn-do-fusion').addEventListener('click', performFusion);
@@ -251,6 +285,50 @@ function showTip() {
     });
     
     speakText(`Try using ${pickedIngredient} as one of your elements. You have ${state.tipsLeft} tips left.`);
+}
+
+function showNote() {
+    if (!state.targetEmotion) return;
+    
+    const overlay = document.getElementById('note-overlay');
+    const scenarioEl = document.getElementById('emotion-scenario');
+    
+    // Child-friendly scenarios for each emotion
+    const scenarios = {
+        'love': 'This is what you feel when you get a big, warm hug from your mom or dad!',
+        'submission': 'This is when you listen carefully to your teacher because you know they want to help you stay safe.',
+        'awe': 'This is the "Wow!" feeling when you look up at a huge, beautiful rainbow or a giant dinosaur at the museum.',
+        'disapproval': 'This is how you feel when a friend takes a toy without asking, and you know it wasn\'t the right thing to do.',
+        'remorse': 'This is the "I wish I hadn\'t done that" feeling after you accidentally break something or hurt a friend\'s feelings.',
+        'contempt': 'This is when you see someone being mean to others and you think, "I don\'t want to be like that at all."',
+        'aggressiveness': 'This is the feeling when you\'re super determined to win a race or finally learn how to ride your bike!',
+        'optimism': 'This is when you wake up and just know that today is going to be a great day for playing outside!',
+        'guilt': 'This is that small, shy feeling when you know you did something wrong and want to make it right.',
+        'curiosity': 'This is when you find a strange bug in the garden and really want to see what it does next!',
+        'despair': 'This is that very sad feeling when you lose your favorite stuffed animal and aren\'t sure if you\'ll find it.',
+        'unbelief': 'This is the "No way!" feeling when you see someone eat something really yucky, like a worm!',
+        'envy': 'This is when you see your friend with a cool new game and you really wish you had one just like it.',
+        'cynicism': 'This is when you\'re being very choosy about which socks to wear because only the softest ones will do!',
+        'pride': 'This is the "I did it!" feeling after you finish a big puzzle or get a gold star on your homework.',
+        'hope': 'This is when you\'re waiting for your birthday and you just know it\'s going to be so much fun!',
+        'delight': 'This is the "Yay!" feeling when you find an extra treat in your lunchbox that you didn\'t expect!',
+        'silliness': 'This is when you make funny faces in the mirror or tell a joke that makes everyone giggle!',
+        'empathy': 'This is when your friend is sad because they fell down, and you feel a little sad too because you care about them.',
+        'strong': 'This is the "I can do anything!" feeling when you help your parents carry the groceries or climb to the top of the slide.',
+        'shame': 'This is when you feel a bit yucky inside because you made a mistake and you\'re worried what others might think.',
+        'anxiety': 'This is the butterflies in your tummy feeling before you start your first day at a new school.',
+        'confusion': 'This is when you\'re trying to solve a tricky math problem and your brain feels like it\'s all mixed up!',
+        'outrage': 'This is how you feel when someone is being very unfair, like when they don\'t share the swings at the park.',
+        'pessimism': 'This is when you think it might rain on your picnic day, even though the sun is still out.',
+        'maze': 'This is the exciting feeling of exploring a new playground with your best friend for the first time!',
+        'bittersweet': 'This is when you\'re happy to be growing up, but a little sad that your favorite old shoes don\'t fit anymore.',
+        'panic': 'This is when everything feels too fast, like when you lose your mom in the supermarket for just a second. Take a deep breath!'
+    };
+
+    scenarioEl.textContent = scenarios[state.targetEmotion.result.id] || state.targetEmotion.result.description;
+    overlay.style.display = 'flex';
+    
+    speakText(scenarioEl.textContent);
 }
 
 function renderDiscoveryGrid() {
