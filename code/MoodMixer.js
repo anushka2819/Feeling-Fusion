@@ -351,10 +351,20 @@ function showNote() {
         'panic': 'This is when everything feels too fast, like when you lose your mom in the supermarket for just a second. Take a deep breath!'
     };
 
-    scenarioEl.textContent = scenarios[state.targetEmotion.result.id] || state.targetEmotion.result.description;
-    overlay.style.display = 'flex';
+    const e1Name = EMOTIONS_DATA[state.targetEmotion.e1].name;
+    const e2Name = EMOTIONS_DATA[state.targetEmotion.e2].name;
     
-    speakText(scenarioEl.textContent);
+    const baseText = scenarios[state.targetEmotion.result.id] || state.targetEmotion.result.description;
+    scenarioEl.innerHTML = `
+        <div style="margin-bottom: 20px;">${baseText}</div>
+        <div style="background: rgba(0,0,0,0.05); padding: 15px; border-radius: 10px; border-left: 4px solid #FFAB91;">
+            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #795548; font-weight: 900; margin-bottom: 5px;">Scientific Hint:</div>
+            <div style="font-size: 0.9rem; color: #5D4037;">Try mixing the essence of <b>${e1Name}</b> with the feeling of <b>${e2Name}</b>.</div>
+        </div>
+    `;
+    
+    overlay.style.display = 'flex';
+    speakText(baseText + `. Hint: mix ${e1Name} and ${e2Name}`);
 }
 
 function renderDiscoveryGrid() {
