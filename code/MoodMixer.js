@@ -144,10 +144,13 @@ export function template() {
     </section>`;
 }
 
+let localNavigate = null;
+
 export function init({ navigate }) {
+    localNavigate = navigate;
     document.getElementById('btn-mixer-back').addEventListener('click', () => {
         sounds.click();
-        navigate('splash');
+        localNavigate('splash');
     });
 
     document.getElementById('btn-mixer-tips').addEventListener('click', () => {
@@ -397,7 +400,7 @@ async function performFusion() {
             saveDiscoveredMixes(state.discoveredMixes);
         }
         
-        setTimeout(() => navigate('success'), 1500);
+        setTimeout(() => localNavigate('success'), 1500);
     } else {
         // WRONG MIX
         state.triesLeft--;
@@ -410,7 +413,7 @@ async function performFusion() {
         if (state.triesLeft <= 0) {
             state.gameStatus = 'lost';
             sounds.mixFail();
-            setTimeout(() => navigate('failure'), 1000);
+            setTimeout(() => localNavigate('failure'), 1000);
         } else {
             sounds.mixFail();
             // Optional: Show a quick feedback overlay or just clear and let try again
