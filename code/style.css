@@ -427,3 +427,28 @@ body {
     0% { transform: translateY(-100%); }
     100% { transform: translateY(100%); }
 }
+
+/* --- FLUID ANIMATIONS --- */
+.liquid-rect {
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: bottom;
+    animation: slosh 4s infinite ease-in-out;
+}
+
+@keyframes slosh {
+    0%, 100% { transform: scaleY(1) skewX(0deg); }
+    33% { transform: scaleY(1.02) skewX(0.5deg); }
+    66% { transform: scaleY(0.98) skewX(-0.5deg); }
+}
+
+.fluid-bubble {
+    animation: rise var(--bubble-dur, 3s) infinite ease-in;
+    opacity: 0;
+}
+
+@keyframes rise {
+    0% { transform: translateY(0); opacity: 0; }
+    20% { opacity: 0.6; }
+    80% { opacity: 0.6; }
+    100% { transform: translateY(-90px); opacity: 0; }
+}

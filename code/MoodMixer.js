@@ -23,8 +23,8 @@ export function template() {
     const leftChoicesHtml = generateChoiceHtml('left');
     const rightChoicesHtml = generateChoiceHtml('right');
 
-    const bubbleHtml = (slot) => Array(4).fill(0).map((_, i) => `
-        <circle class="fluid-bubble" cx="${30 + i * 15}" cy="100" r="${2 + i % 2}" fill="white" opacity="0.4" style="animation-delay: ${i * 0.5}s;" />
+    const bubbleHtml = () => Array(5).fill(0).map((_, i) => `
+        <circle class="fluid-bubble" cx="${20 + Math.random() * 60}" cy="120" r="${1.5 + Math.random() * 2}" fill="white" opacity="0.6" style="animation-delay: ${Math.random() * 3}s; animation-duration: ${2 + Math.random() * 2}s;" />
     `).join('');
 
     const beakerSvg = (id) => `
@@ -36,8 +36,10 @@ export function template() {
             </defs>
             <path d="M40 20 L40 50 L10 110 L90 110 L60 50 L60 20 Z" stroke="white" stroke-width="2" fill="none" />
             <g clip-path="url(#clip-flask-${id})">
-                <rect id="liquid-${id}" class="liquid-rect" x="0" y="110" width="100" height="0" fill="var(--primary)" opacity="0.7" />
-                ${bubbleHtml(id)}
+                <rect id="liquid-${id}" class="liquid-rect" x="0" y="110" width="100" height="0" fill="var(--primary)" />
+                <g class="bubble-group">
+                    ${bubbleHtml()}
+                </g>
             </g>
         </svg>
     `;
