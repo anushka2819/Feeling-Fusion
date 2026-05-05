@@ -59,7 +59,7 @@ export function template() {
                 </button>
                 
                 <!-- Center: Mission Display -->
-                <div class="mission-header" style="flex: 1; display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.03); padding: 12px 60px; border-radius: 20px; backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); box-shadow: inset 0 0 20px rgba(255,255,255,0.05); position: relative; overflow: hidden;">
+                <div class="mission-header" style="flex: 1; display: flex; flex-direction: column; align-items: center; background: rgba(0,0,0,0.5); padding: 8px 60px; border-radius: 20px; backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 20px rgba(255,255,255,0.05); position: relative; overflow: hidden;">
                     <!-- Technical Brackets -->
                     <div style="position: absolute; top: 10px; left: 10px; width: 15px; height: 15px; border-top: 2px solid var(--primary); border-left: 2px solid var(--primary); opacity: 0.5;"></div>
                     <div style="position: absolute; bottom: 10px; right: 10px; width: 15px; height: 15px; border-bottom: 2px solid var(--primary); border-right: 2px solid var(--primary); opacity: 0.5;"></div>

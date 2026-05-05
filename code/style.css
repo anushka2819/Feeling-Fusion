@@ -235,8 +235,8 @@ body {
 }
 
 #screen-mood-mixer .chalkboard {
-    top: 135px;
-    height: 520px;
+    top: 105px;
+    height: 480px;
     border-top: 10px solid var(--wood-dark);
 }
 
@@ -458,4 +458,4 @@ body {
     20% { opacity: 0.6; }
     80% { opacity: 0.6; }
     100% { transform: translateY(-90px); opacity: 0; }
-}
+}
