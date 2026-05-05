@@ -45,11 +45,9 @@ export function template() {
     return /* html */`
     <section id="screen-mood-mixer" class="screen" aria-label="Feeling Fusion Lab">
             <div class="chalkboard">
-                <div id="mission-board" style="position: absolute; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; box-sizing: border-box;">
-                    <h2 style="color: var(--primary); margin: 0; font-size: 1.2rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 2px;">Target Emotion</h2>
-                    <h1 id="target-emotion-name" style="color: white; margin: 10px 0; font-size: 3.5rem; text-shadow: 0 0 20px rgba(255,255,255,0.2);">???</h1>
-                    <p id="target-emotion-desc" style="color: var(--chalk); font-size: 1rem; max-width: 400px; margin: 0;">Use your scientific skills to find the right combination!</p>
-                </div>
+                <div class="formula" style="top: 15%; left: 10%;">H₂O + Joy = ?</div>
+                <div class="formula" style="top: 40%; left: 80%;">Mix₂</div>
+                <div class="formula" style="top: 70%; left: 15%;">Emo + Fusion</div>
             </div>
 
         <div class="mood-mixer-container">
@@ -58,17 +56,30 @@ export function template() {
                     <i data-lucide="log-out"></i>
                 </button>
                 
-                <div class="mission-status" style="background: rgba(0,0,0,0.4); padding: 10px 20px; border-radius: 20px; color: white; display: flex; align-items: center; gap: 15px; backdrop-filter: blur(5px);">
-                    <div style="text-align: right;">
-                        <div style="font-size: 0.7rem; opacity: 0.7; text-transform: uppercase;">Tries Left</div>
-                        <div id="tries-count" style="font-size: 1.2rem; font-weight: 900; color: #FF4081;">${state.triesLeft}</div>
+                <div class="mission-status" style="background: rgba(0,0,0,0.6); padding: 5px 25px; border-radius: 30px; color: white; display: flex; align-items: center; gap: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
+                    <div style="text-align: center;">
+                        <div style="font-size: 0.6rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px;">Tries</div>
+                        <div id="tries-count" style="font-size: 1.1rem; font-weight: 900; color: #FF4081;">${state.triesLeft}</div>
+                    </div>
+                    <div style="width: 1px; height: 20px; background: rgba(255,255,255,0.1);"></div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 0.6rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px;">Tips</div>
+                        <div id="tips-count" style="font-size: 1.1rem; font-weight: 900; color: #FFEB3B;">${state.tipsLeft}</div>
                     </div>
                 </div>
 
-                <button id="btn-mixer-tips" class="circle-btn" title="Get a Tip">
+                <button id="btn-mixer-tips" class="circle-btn" title="Use a Tip">
                     <i data-lucide="lightbulb"></i>
                 </button>
             </header>
+
+            <!-- Mission Clipboard -->
+            <div class="mission-clipboard" style="position: absolute; bottom: 160px; left: 40px; background: #fff; padding: 20px; width: 220px; border-radius: 5px 5px 20px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: rotate(-2deg); z-index: 50;">
+                <div style="width: 60px; height: 15px; background: #90A4AE; position: absolute; top: -5px; left: 50%; transform: translateX(-50%); border-radius: 3px;"></div>
+                <h3 style="color: #263238; margin: 0 0 10px 0; font-size: 0.7rem; text-transform: uppercase; border-bottom: 2px solid #ECEFF1; padding-bottom: 5px;">Research Goal</h3>
+                <div id="target-emotion-name" style="color: #D32F2F; font-size: 1.8rem; font-weight: 900; margin: 10px 0;">???</div>
+                <p id="target-emotion-desc" style="color: #546E7A; font-size: 0.8rem; line-height: 1.4; margin: 0;">Select elements to begin analysis.</p>
+            </div>
 
             <div class="lab-main-area">
                 <div class="lab-side-choices side-left">
@@ -196,6 +207,7 @@ export function onShow() {
 
 function initNewGame() {
     state.triesLeft = 4;
+    state.tipsLeft = 3;
     state.gameStatus = 'playing';
     
     // Pick a random recipe as target
@@ -206,17 +218,43 @@ function initNewGame() {
     const targetName = document.getElementById('target-emotion-name');
     const targetDesc = document.getElementById('target-emotion-desc');
     const triesCount = document.getElementById('tries-count');
+    const tipsCount = document.getElementById('tips-count');
+    const tipsBtn = document.getElementById('btn-mixer-tips');
     
     if (targetName) targetName.textContent = randomRecipe.result.name;
     if (targetDesc) targetDesc.textContent = randomRecipe.result.description;
+    
     if (triesCount) {
         triesCount.textContent = state.triesLeft;
         triesCount.style.color = '#FF4081';
     }
+    
+    if (tipsCount) {
+        tipsCount.textContent = state.tipsLeft;
+        tipsCount.style.color = '#FFEB3B';
+    }
+
+    if (tipsBtn) {
+        tipsBtn.classList.remove('disabled');
+        tipsBtn.disabled = false;
+    }
 }
 
 function showTip() {
-    if (!state.targetEmotion) return;
+    if (!state.targetEmotion || state.tipsLeft <= 0) return;
+    
+    state.tipsLeft--;
+    const tipsCount = document.getElementById('tips-count');
+    const tipsBtn = document.getElementById('btn-mixer-tips');
+    
+    if (tipsCount) tipsCount.textContent = state.tipsLeft;
+    if (state.tipsLeft <= 0) {
+        if (tipsBtn) {
+            tipsBtn.classList.add('disabled');
+            tipsBtn.disabled = true;
+        }
+        if (tipsCount) tipsCount.style.color = '#9E9E9E';
+    }
     
     // Pick one of the two ingredients
     const ingredients = [state.targetEmotion.e1, state.targetEmotion.e2];
@@ -229,7 +267,7 @@ function showTip() {
         setTimeout(() => b.classList.remove('tip-highlight'), 3000);
     });
     
-    speakText(`Try using ${pickedIngredient} as one of your elements.`);
+    speakText(`Try using ${pickedIngredient} as one of your elements. You have ${state.tipsLeft} tips left.`);
 }
 
 function renderDiscoveryGrid() {
