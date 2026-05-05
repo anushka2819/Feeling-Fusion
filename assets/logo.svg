@@ -1,46 +1,48 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
-        <linearGradient id="fusion-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#8B5CF6" /> <!-- Purple -->
-            <stop offset="100%" stop-color="#06B6D4" /> <!-- Cyan -->
+        <!-- Vibrant Liquid Gradient -->
+        <linearGradient id="liquid-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FF0080" /> <!-- Hot Pink -->
+            <stop offset="100%" stop-color="#7928CA" /> <!-- Purple -->
         </linearGradient>
-        <filter id="logo-glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="8" result="blur" />
+        
+        <!-- Glow Filter -->
+        <filter id="glow-effect" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="10" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
         </filter>
-        <radialGradient id="inner-glow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-            <stop offset="0%" stop-color="white" stop-opacity="0.8" />
-            <stop offset="100%" stop-color="white" stop-opacity="0" />
-        </radialGradient>
     </defs>
 
-    <!-- Background Fusion Aura -->
-    <circle cx="256" cy="280" r="150" fill="url(#fusion-grad)" opacity="0.15" filter="url(#logo-glow)" />
+    <!-- Outer Glow Aura -->
+    <circle cx="256" cy="280" r="160" fill="#FF0080" opacity="0.1" filter="url(#glow-effect)" />
 
-    <!-- Sleek Flask Outline -->
-    <path d="M210 60H302M256 60V160M256 160L140 420C130 440 145 460 170 460H342C367 460 382 440 372 420L256 160Z" 
-          stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    <!-- Glass Flask Body -->
+    <!-- The "Glass" container -->
+    <path d="M210 60H302M220 60V180L100 420C90 445 110 460 135 460H377C402 460 422 445 412 420L292 180V60" 
+          stroke="white" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" />
+    
+    <!-- Liquid Content (Fills more space) -->
+    <path d="M145 440C125 440 120 430 130 410L220 220C220 220 256 200 292 220L382 410C392 430 387 440 367 440H145Z" 
+          fill="url(#liquid-gradient)" />
 
-    <!-- The Fusion Heart Core -->
-    <g filter="url(#logo-glow)">
-        <path d="M256 380C256 380 230 350 200 350C170 350 160 375 160 395C160 435 256 460 256 460C256 460 352 435 352 395C352 375 342 350 312 350C282 350 256 380 256 380Z" 
-              fill="url(#fusion-grad)" />
-        
-        <!-- Inner Core Light -->
-        <circle cx="256" cy="390" r="30" fill="white" opacity="0.4" />
+    <!-- Swirling Energy Detail -->
+    <path d="M190 380Q256 420 322 380" stroke="white" stroke-width="6" stroke-linecap="round" opacity="0.3" />
+
+    <!-- The Heart Core (Glowing) -->
+    <g filter="url(#glow-effect)">
+        <path d="M256 300C256 300 248 288 232 288C216 288 210 302 210 312C210 335 256 360 256 360C256 360 302 335 302 312C302 302 296 288 280 288C264 288 256 300 256 300Z" 
+              fill="white" />
     </g>
 
-    <!-- Orbital Particles (Atoms of Emotion) -->
-    <circle cx="200" cy="220" r="8" fill="#8B5CF6">
-        <animate attributeName="opacity" values="0.3;1;0.3" dur="3s" repeatCount="indefinite" />
-    </circle>
-    <circle cx="312" cy="260" r="6" fill="#06B6D4">
-        <animate attributeName="opacity" values="1;0.3;1" dur="4s" repeatCount="indefinite" />
-    </circle>
-    <circle cx="256" cy="180" r="4" fill="white">
-        <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" />
-    </circle>
+    <!-- Bubbles -->
+    <circle cx="200" cy="340" r="12" fill="white" opacity="0.4" />
+    <circle cx="310" cy="360" r="8" fill="white" opacity="0.3" />
+    <circle cx="240" cy="280" r="6" fill="white" opacity="0.5" />
 
-    <!-- Energy Swirl -->
-    <path d="M180 400C220 380 290 380 332 400" stroke="white" stroke-width="4" stroke-linecap="round" opacity="0.4" />
+    <!-- Glass Highlights (Thicker, more stylized) -->
+    <path d="M360 300C380 340 385 400 370 430" stroke="white" stroke-width="12" stroke-linecap="round" opacity="0.2" />
+    <rect x="235" y="80" width="12" height="60" rx="6" fill="white" opacity="0.15" />
+
+    <!-- Rim Detail -->
+    <path d="M210 60C210 50 302 50 302 60" stroke="white" stroke-width="20" stroke-linecap="round" />
 </svg>

@@ -1,12 +1,11 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
-        <linearGradient id="fav-fusion" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#8B5CF6" />
-            <stop offset="100%" stop-color="#06B6D4" />
+        <linearGradient id="fav-vibrant" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FF0080" />
+            <stop offset="100%" stop-color="#7928CA" />
         </linearGradient>
     </defs>
-    <!-- Minimalist Flask silhouette -->
-    <path d="M13 4H19M16 4V10L10 24C9 26 10.5 28 12.5 28H19.5C21.5 28 23 26 22 24L16 10V4" stroke="url(#fav-fusion)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-    <!-- Glowing core -->
-    <circle cx="16" cy="22" r="4" fill="url(#fav-fusion)" opacity="0.8" />
+    <!-- Bold Flask Silhouette -->
+    <path d="M12 4H20M13 4V10L6 24C5 26 6 28 8 28H24C26 28 27 26 26 24L19 10V4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 25L14 14C14 14 16 13 18 14L23 25C23.5 26.5 22.5 27.5 21 27.5H11C9.5 27.5 8.5 26.5 9 25Z" fill="url(#fav-vibrant)" />
 </svg>
