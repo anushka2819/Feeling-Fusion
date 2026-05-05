@@ -15,14 +15,14 @@ export function template() {
         </div>
 
         <div class="result-card success">
-            <div class="result-badge">SUCCESS</div>
+            <div class="result-badge">YOU WON!</div>
             <div class="result-icon-container">
                 <img src="${result.icon}" alt="${result.name}" class="result-icon pulse-animation">
             </div>
             
-            <h1 class="result-title">New Discovery!</h1>
+            <h1 class="result-title">Mission Accomplished</h1>
             <h2 class="emotion-name">${result.name}</h2>
-            <p class="result-desc">${result.description || 'You have successfully synthesized a new emotion in the lab.'}</p>
+            <p class="result-desc">Excellent work, Scientist! You correctly identified the elements of <b>${result.name}</b>.</p>
             
             <div class="result-actions">
                 <button id="btn-success-continue" class="btn-primary">
