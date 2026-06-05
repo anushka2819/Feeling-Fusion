@@ -265,7 +265,7 @@ function initNewGame() {
     const tipsCount = document.getElementById('tips-count');
     const tipsBtn = document.getElementById('btn-mixer-tips');
     
-    if (targetName) targetName.textContent = randomRecipe.result.name;
+    if (targetName) targetName.textContent = state.targetEmotion.result.name;
     
     if (triesCount) {
         triesCount.textContent = state.triesLeft;
