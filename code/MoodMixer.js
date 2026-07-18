@@ -248,7 +248,7 @@ function initNewGame() {
     
     // Pick a random recipe as target
     // Use all complex emotions as questions (priority to undiscovered ones)
-    const undiscovered = MIXING_RECIPES.filter(r => !state.discoveredMixes.includes(r.result.id));
+    const undiscovered = MIXING_RECIPES.filter(r => !state.discoveredMixes.find(m => m.id === r.result.id));
     
     if (undiscovered.length > 0) {
         // Pick the first one in the list for a structured learning path
@@ -537,9 +537,6 @@ function closeFusionResult() {
     } else {
         clearMixer();
         renderDiscoveryGrid();
-        const btn = document.getElementById('btn-do-fusion');
-        btn.classList.remove('disabled');
-        btn.disabled = false;
     }
 }
 
