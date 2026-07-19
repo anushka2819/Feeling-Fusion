@@ -2,6 +2,7 @@
  * code/Tutorial.js
  */
 import { sounds } from './utils/sounds.js';
+import { toggleFullscreen, isFullscreen } from './utils/fullscreen.js';
 
 export function template() {
     return /* html */`
@@ -13,9 +14,14 @@ export function template() {
 
         <div class="tutorial-card">
             <header class="tutorial-header">
-                <button id="btn-tutorial-back" class="circle-btn" title="Go Back">
-                    <i data-lucide="arrow-left"></i>
-                </button>
+                <div style="display: flex; gap: 10px;">
+                    <button id="btn-tutorial-back" class="circle-btn" title="Go Back">
+                        <i data-lucide="arrow-left"></i>
+                    </button>
+                    <button id="btn-fullscreen-toggle" class="circle-btn" title="Toggle Fullscreen">
+                        <i data-lucide="${isFullscreen() ? 'minimize' : 'maximize'}"></i>
+                    </button>
+                </div>
                 <h2 class="splash-title" style="font-size: 2.5rem; letter-spacing: 2px;">Lab Manual</h2>
             </header>
 
@@ -65,6 +71,11 @@ export function init({ navigate }) {
     document.getElementById('btn-tutorial-back').addEventListener('click', () => {
         sounds.click();
         navigate('splash');
+    });
+
+    document.getElementById('btn-fullscreen-toggle').addEventListener('click', () => {
+        sounds.click();
+        toggleFullscreen();
     });
 
     document.getElementById('btn-tutorial-done').addEventListener('click', () => {

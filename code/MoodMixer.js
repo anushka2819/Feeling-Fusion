@@ -7,6 +7,7 @@ import { EMOTIONS_DATA } from './gameData.js';
 import { MIXING_RECIPES } from './moodMixerData.js';
 import { speakText } from './utils/accessibility.js';
 import { saveDiscoveredMixes } from './utils/storage.js';
+import { toggleFullscreen, isFullscreen } from './utils/fullscreen.js';
 
 let selectedSlot1 = null;
 let selectedSlot2 = null;
@@ -53,9 +54,14 @@ export function template() {
 
         <div class="mood-mixer-container">
             <header class="mixer-header" style="position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; z-index: 100; align-items: center; gap: 20px;">
-                <button id="btn-mixer-back" class="circle-btn" title="Exit to Menu">
-                    <i data-lucide="log-out"></i>
-                </button>
+                <div style="display: flex; gap: 10px;">
+                    <button id="btn-mixer-back" class="circle-btn" title="Exit to Menu">
+                        <i data-lucide="log-out"></i>
+                    </button>
+                    <button id="btn-fullscreen-toggle" class="circle-btn" title="Toggle Fullscreen">
+                        <i data-lucide="${isFullscreen() ? 'minimize' : 'maximize'}"></i>
+                    </button>
+                </div>
                 
                 <!-- Center: Mission Display -->
                 <div class="mission-header" style="flex: 1; display: flex; flex-direction: column; align-items: center; background: rgba(0,0,0,0.5); padding: 8px 60px; border-radius: 20px; backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 20px rgba(255,255,255,0.05); position: relative; overflow: hidden;">
@@ -165,6 +171,11 @@ export function init({ navigate }) {
     document.getElementById('btn-mixer-back').addEventListener('click', () => {
         sounds.click();
         localNavigate('splash');
+    });
+
+    document.getElementById('btn-fullscreen-toggle').addEventListener('click', () => {
+        sounds.click();
+        toggleFullscreen();
     });
 
     document.getElementById('btn-mixer-tips').addEventListener('click', () => {
