@@ -2,6 +2,7 @@
  * code/Splash.js
  */
 import { sounds } from './utils/sounds.js';
+import { requestFullscreen } from './utils/fullscreen.js';
 
 export function template() {
     return /* html */`
@@ -39,6 +40,11 @@ export function template() {
 
 export function init({ navigate }) {
     document.getElementById('btn-start-game').addEventListener('click', () => {
+        // IMPORTANT: Modern web browsers block fullscreen requests unless they are strictly 
+        // initiated by a direct user gesture (like a click event). By calling requestFullscreen() 
+        // directly inside this onClick handler, we ensure the browser allows the transition.
+        requestFullscreen();
+
         sounds.click();
         navigate('tutorial');
     });
