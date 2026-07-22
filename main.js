@@ -1,9 +1,10 @@
-
 import * as Splash from './code/Splash.js';
 import * as Tutorial from './code/Tutorial.js';
 import * as MoodMixer from './code/MoodMixer.js';
 import * as Success from './code/Success.js';
 import * as Failure from './code/Failure.js';
+import * as SagaMap from './code/SagaMap.js';
+import * as Match3Engine from './code/Match3Engine.js';
 
 const app = document.getElementById('app');
 
@@ -12,27 +13,29 @@ const screens = {
     tutorial: Tutorial,
     moodMixer: MoodMixer,
     success: Success,
-    failure: Failure
+    failure: Failure,
+    saga: SagaMap,
+    match3: Match3Engine
 };
 
 function navigate(screenId) {
     console.log('Navigating to:', screenId);
     const screenModule = screens[screenId];
-    
+
     if (screenModule) {
         // Inject the template
         app.innerHTML = screenModule.template();
-        
+
         // Make the screen visible
         const screenElement = app.querySelector('.screen');
         if (screenElement) screenElement.classList.add('active');
-        
+
         // Initialize the screen
         screenModule.init({ navigate });
-        
+
         // Show the screen (run animations, etc.)
         if (screenModule.onShow) screenModule.onShow();
-        
+
         // Create icons
         if (window.lucide) {
             window.lucide.createIcons();

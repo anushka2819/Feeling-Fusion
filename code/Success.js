@@ -6,7 +6,7 @@ import { sounds } from './utils/sounds.js';
 
 export function template() {
     const result = state.lastResult || { name: 'Emotion', icon: 'assets/elements/joy_select.svg' };
-    
+
     return /* html */`
     <section id="screen-success" class="screen success-screen active" aria-label="Experiment Successful">
         <div class="lab-environment">
